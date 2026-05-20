@@ -1,0 +1,50 @@
+# Root .gitignore for ChatbotAI repository
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+.cache/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Temp
+tmp/
+temp/
+
+# Frontend generated data (don't commit runtime data)
+ChatbotAI/frontend/services-data/
+
+# Coverage
+coverage/
+
+# Other
+.pnp
+.pnp.js
+
+# Ignore local secrets/configs
+secrets.json
+

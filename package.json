@@ -1,0 +1,16 @@
+{
+    "scripts": {
+        "start:all": "powershell -ExecutionPolicy Bypass -File run-all.ps1",
+        "frontend:dev": "npm --prefix ChatbotAI/frontend run dev",
+        "frontend:build": "npm --prefix ChatbotAI/frontend run build",
+        "frontend:start": "npm --prefix ChatbotAI/frontend run start",
+        "import:csv": "npx tsx ChatbotAI/scripts/import-csv.ts --input ./ChatbotAI/frontend/data-export --output ./ChatbotAI/scripts/seed-data",
+        "seed:all": "npx tsx ChatbotAI/scripts/seed-all.ts"
+    },
+    "dependencies": {
+        "jsonwebtoken": "^9.0.3"
+    },
+    "devDependencies": {
+        "@types/jsonwebtoken": "^9.0.10"
+    }
+}
