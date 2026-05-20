@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  slug          String   @unique
+  category      String
+  brand         String
+  price         Float
+  discountPrice Float?   @map("discount_price")
+  image         String?
+  shortDesc     String?  @map("short_desc")
+  specs         Json?
+  stock         Int      @default(100)
+  rating        Float    @default(0)
+  reviewCount   Int      @default(0) @map("review_count")
+  tags          String[] @default([])
+  compatKey     String?  @map("compat_key")
+  status        String   @default("active")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([category])
+  @@index([brand])
+  @@index([status])
+  @@map("products")
+}
+
+model PrebuiltPC {
+  id          String @id @default(uuid())
+  name        String
+  slug        String @unique
+  purpose     String
+  price       Float
+  image       String?
+  components  Json
+  description String?
+  rating      Float  @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("prebuilt_pcs")
+}
+
+model CompatRule {
+  id            String @id @default(uuid())
+  comp1Category String @map("comp1_category")
+  comp2Category String @map("comp2_category")
+  matchKey      String @map("match_key")
+  description   String
+
+  @@map("compat_rules")
+}
+
+model AssemblyGuide {
+  id            String @id @default(uuid())
+  title         String
+  slug          String @unique
+  difficulty    String
+  estimatedTime String @map("estimated_time")
+  tools         Json
+  steps         Json
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("assembly_guides")
+}
+
+model FAQ {
+  id       String   @id @default(uuid())
+  question String
+  answer   String
+  category String?
+  tags     String[] @default([])
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("faqs")
+}
+
+model Knowledge {
+  id      String   @id @default(uuid())
+  title   String
+  content String
+  tags    String[] @default([])
+  source  String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("knowledge")
+}

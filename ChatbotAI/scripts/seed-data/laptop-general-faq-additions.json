@@ -1,0 +1,99 @@
+[{
+        "id": "qa-faq-laptop-battery-real",
+        "question": "Pin laptop dùng thực tế được mấy tiếng khi lướt web?",
+        "answer": "Quảng cáo: 8-10h. Thực tế: 6-7h. Lý do: Màn hình 1440p hao 30%, Wifi liên tục, background tasks. Tips kéo dài: Giảm brightness 40% (+2h), Power Saver mode (+1.5h), Wifi tắt (+30 phút). Macbook pin hơn gấp đôi vì tối ưu tốt.",
+        "category": "laptop",
+        "tags": ["laptop", "battery", "endurance", "tips"]
+    },
+    {
+        "id": "qa-faq-laptop-upgrade",
+        "question": "Laptop có nâng cấp được như PC không?",
+        "answer": "CPU/GPU: Không (hàn cứng). RAM: Có thể (300k, thay từ 8GB→16GB). SSD: Có thể (400k, 512GB→1TB). PC dễ upgrade lại hơn (CPU/GPU dễ thay). Kết luận: Laptop = một khối, PC = bộ linh kiện modular.",
+        "category": "laptop",
+        "tags": ["laptop", "upgrade", "component"]
+    },
+    {
+        "id": "qa-faq-laptop-vs-pc-price",
+        "question": "Tại sao cùng tiền PC lại mạnh hơn laptop 30-40%?",
+        "answer": "Laptop compact → tản nhiệt kém → throttle. PC chuyên dụng tản nhiệt → full power. GPU mobile 30% yếu hơn desktop. Laptop CPU bị limit 45W, PC full 125W+. Tương tự 15T: Laptop i7+RTX 4060=1440p Med, PC i5+RTX 4070=1440p High.",
+        "category": "laptop",
+        "tags": ["laptop", "pc", "performance", "comparison"]
+    },
+    {
+        "id": "qa-faq-student-machine",
+        "question": "Em sinh viên ngành Kinh tế/Luật, nên mua máy như nào?",
+        "answer": "Kinh tế: i5+16GB (8-10T) cho Excel/SQL. Luật: i3+8GB (5-6T) cho Word/PDF ok. Sư phạm: Laptop i5 8GB (10-12T) vì di động. IT: i7+16GB+SSD (12-15T) cho IDE/coding. Khuyến nghị: Mua phù hợp ngành (không overkill).",
+        "category": "recommendation",
+        "tags": ["student", "budget", "ngành", "recommendation"]
+    },
+    {
+        "id": "qa-faq-livestream-machine",
+        "question": "Cần máy tính gì để livestream bán quần áo trên Facebook?",
+        "answer": "CPU: i7-12700 needed (encoding real-time). GPU: RTX 3060 for encoding. RAM: 16GB (multitask). Setup: PC 12T rẻ hơn Laptop 15T cùng CPU. Extra: Camera 2T, mic 500k, lighting 300k. Software: OBS Studio FREE. Internet: 3Mbps upstream ok.",
+        "category": "recommendation",
+        "tags": ["livestream", "business", "streaming", "setup"]
+    },
+    {
+        "id": "qa-faq-screen-matte-glossy",
+        "question": "Màn hình chống chói (matte) hay gương (glossy) tốt hơn cho mắt?",
+        "answer": "Matte: Ít phản chiếu, tốt cho mắt, công sở tuyệt. Glossy: Sắc màu sống, chói mắt, gaming ok. Khuyến nghị: Work→Matte, Photo/Gaming→Glossy. Panel: IPS tốt nhất (góc nhìn 178°). Độ phân giải: 1440p ok, 1080p cũng được.",
+        "category": "laptop",
+        "tags": ["laptop", "screen", "matte", "glossy", "display"]
+    },
+    {
+        "id": "qa-faq-cpu-socket-compat",
+        "question": "Làm sao biết CPU có lắp được mainboard không?",
+        "answer": "Kiểm tra Socket! Intel Gen 12-14: LGA1700 socket (B660/B760/Z790 all ok). AMD Ryzen 5000: AM4 (B550/X570 ok). Ryzen 7000: AM5 (B650/X870 ok). Ví dụ: i7-13700 + B760 = OK (socket match). i7-13700 + B560 = NO (khác socket). Quick: Gen+Socket phải match!",
+        "category": "pc-build",
+        "tags": ["compatibility", "socket", "cpu", "mainboard"]
+    },
+    {
+        "id": "qa-faq-psu-wattage",
+        "question": "Nguồn 450W có đủ cho RTX 3060 không? Có làm cháy máy không?",
+        "answer": "Không cháy nhưng liều lĩnh! i5+RTX 3060 draw ~250W. PSU 450W = 80% load (unsafe). Khuyến nghị: 550W+ an toàn, 650W ideal. Công thức: TDP×1.3-1.5 = PSU. Lấy Gold cert (dù +200k nhưng bền). Đừng tiết kiệm PSU (hỏng=burn all).",
+        "category": "pc-build",
+        "tags": ["psu", "power", "wattage", "safety"]
+    },
+    {
+        "id": "qa-faq-ssd-vs-hdd",
+        "question": "Tại sao phải cài Windows trên SSD, không phải HDD?",
+        "answer": "Boot time: SSD 10s vs HDD 60s. Windows responsive: Day/night khác. Game load: SSD 5-10s vs HDD 30-60s. Setup: SSD 1TB (Windows+Apps+3games). HDD 2TB (archive). Setup 1TB SSD only = minimum ok. HDD optional for cold storage.",
+        "category": "pc-build",
+        "tags": ["ssd", "hdd", "storage", "speed"]
+    },
+    {
+        "id": "qa-faq-water-cooling",
+        "question": "Tản nhiệt nước có an toàn không? Nước rò ra thì sao?",
+        "answer": "AIO (Corsair/NZXT): 95% safe (sealed). Nước rò hiếm, có protection. Custom loop: 70% safe (DIY risk). Khi nào dùng: Overclocker, silent PC, i9+RTX 4080. Khi không: Budget, beginner, casual. Thay thế: Air cooler (Thermalright/Noctua) ok cho most.",
+        "category": "pc-build",
+        "tags": ["cooling", "water", "thermal", "safety"]
+    },
+    {
+        "id": "qa-faq-ports-missing",
+        "question": "Máy không có cổng LAN (Ethernet) có bắt được Wifi không?",
+        "answer": "Có! Hầu hết laptop/PC hiện đại có Wifi built-in. Ethernet optional. Nếu cần: Mua USB Ethernet adapter (150-300k). Wifi ổn, Ethernet ổn định hơn. Multi-monitor: Mua USB-C→HDMI converter (200-300k).",
+        "category": "laptop",
+        "tags": ["ports", "connectivity", "wifi", "ethernet"]
+    },
+    {
+        "id": "qa-faq-keyboard-switch",
+        "question": "Bàn phím cơ Blue hay Brown switch gõ đỡ ồn hơn?",
+        "answer": "Brown: Quiet, subtle tactile (văn phòng best). Blue: Clicky, ồn (gaming). Red: Silent smooth (gaming/office). Khuyến nghị: Văn phòng→Brown. Gaming→Red/Blue. Hybrid→Brown ok cả hai.",
+        "category": "peripherals",
+        "tags": ["keyboard", "mechanical", "switch", "audio"]
+    },
+    {
+        "id": "qa-faq-storage-fake",
+        "question": "Mua ổ cứng 1TB sao chỉ thấy 930GB? Shop lừa tôi à?",
+        "answer": "Không lừa! Marketing dùng 1000^3 byte (decimal), máy tính dùng 1024^3 byte (binary). 1TB = 1,000,000,000,000 bytes ÷ 1024^3 = 931GB. Plus Windows ăn 150GB, còn 780GB free thực tế. Bình thường, không phải lỗi.",
+        "category": "general",
+        "tags": ["storage", "capacity", "1tb", "binary", "decimal"]
+    },
+    {
+        "id": "qa-faq-blue-screen",
+        "question": "Máy bị hiện màn hình xanh (BSOD) phải làm sao?",
+        "answer": "Blue Screen = Windows crash. Nguyên nhân: Driver cũ (40%), RAM lỏng (30%), Overheating (15%), PSU kém (10%). Fix: Update drivers (chipset, GPU), Reseat RAM, Clean dust, Check temps. 95% fixable. Ghi lại error code, Google nó.",
+        "category": "troubleshooting",
+        "tags": ["blue screen", "bsod", "crash", "windows"]
+    }
+]

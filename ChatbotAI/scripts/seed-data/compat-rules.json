@@ -1,0 +1,387 @@
+[
+  {
+    "id": "compat-lga1700-z790",
+    "comp1Category": "cpu",
+    "comp2Category": "mainboard",
+    "matchKey": "LGA1700_DDR5",
+    "description": "CPU Intel Gen 12/13/14 (LGA 1700) tương thích với mainboard Z790/B760/H770/Z690/B660 DDR5"
+  },
+  {
+    "id": "compat-lga1700-ddr4",
+    "comp1Category": "cpu",
+    "comp2Category": "mainboard",
+    "matchKey": "LGA1700_DDR4",
+    "description": "CPU Intel Gen 12/13/14 (LGA 1700) tương thích với mainboard B660/H610 DDR4"
+  },
+  {
+    "id": "compat-am5-x670e",
+    "comp1Category": "cpu",
+    "comp2Category": "mainboard",
+    "matchKey": "AM5_DDR5",
+    "description": "CPU AMD Ryzen 7000/8000 (AM5) tương thích với mainboard X670E/X670/B650E/B650/A620 DDR5"
+  },
+  {
+    "id": "compat-am4-b550",
+    "comp1Category": "cpu",
+    "comp2Category": "mainboard",
+    "matchKey": "AM4_DDR4",
+    "description": "CPU AMD Ryzen 3000/5000 (AM4) tương thích với mainboard B550/X570/B450/A520 DDR4"
+  },
+  {
+    "id": "compat-ddr5-board",
+    "comp1Category": "ram",
+    "comp2Category": "mainboard",
+    "matchKey": "DDR5",
+    "description": "RAM DDR5 chỉ dùng được với mainboard DDR5. KHÔNG tương thích DDR4 ngược lại"
+  },
+  {
+    "id": "compat-ddr4-board",
+    "comp1Category": "ram",
+    "comp2Category": "mainboard",
+    "matchKey": "DDR4",
+    "description": "RAM DDR4 chỉ dùng được với mainboard DDR4. Khe cắm khác vật lý với DDR5"
+  },
+  {
+    "id": "compat-ram-dual",
+    "comp1Category": "ram",
+    "comp2Category": "mainboard",
+    "matchKey": "DUAL_CHANNEL",
+    "description": "Luôn dùng 2 thanh RAM cùng loại (dual-channel) để tăng hiệu năng 15-30%. Cắm khe A2+B2"
+  },
+  {
+    "id": "compat-ddr5-am5",
+    "comp1Category": "ram",
+    "comp2Category": "cpu",
+    "matchKey": "DDR5_AM5_6000",
+    "description": "Với CPU AMD AM5, DDR5-6000 CL30 là sweet spot tốt nhất. EXPO profile recommended"
+  },
+  {
+    "id": "compat-ddr4-am4",
+    "comp1Category": "ram",
+    "comp2Category": "cpu",
+    "matchKey": "DDR4_AM4_3600",
+    "description": "Với CPU AMD AM4, DDR4-3600 CL16 là sweet spot tối ưu (1:1 FCLK). Trên 3600 diminishing returns"
+  },
+  {
+    "id": "compat-ddr5-intel",
+    "comp1Category": "ram",
+    "comp2Category": "cpu",
+    "matchKey": "DDR5_INTEL",
+    "description": "Với CPU Intel 12/13/14, DDR5-5600~6000 cho hiệu năng tốt nhất. XMP 3.0 recommended"
+  },
+  {
+    "id": "compat-4090-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "4090_PSU_850W",
+    "description": "RTX 4090 cần PSU tối thiểu 850W (khuyến nghị 1000W). Cần cáp 16-pin 12VHPWR hoặc adapter 3x8-pin"
+  },
+  {
+    "id": "compat-4080s-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "4080S_PSU_750W",
+    "description": "RTX 4080 Super cần PSU tối thiểu 750W (khuyến nghị 850W). Cáp 16-pin 12VHPWR"
+  },
+  {
+    "id": "compat-4070tis-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "4070TIS_PSU_700W",
+    "description": "RTX 4070 Ti Super cần PSU tối thiểu 700W (khuyến nghị 750W)"
+  },
+  {
+    "id": "compat-4070s-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "4070S_PSU_650W",
+    "description": "RTX 4070 Super cần PSU tối thiểu 650W. Chỉ cần 1 cáp 8-pin hoặc 12VHPWR"
+  },
+  {
+    "id": "compat-4070-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "4070_PSU_650W",
+    "description": "RTX 4070 cần PSU tối thiểu 650W"
+  },
+  {
+    "id": "compat-4060ti-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "4060TI_PSU_550W",
+    "description": "RTX 4060 Ti cần PSU tối thiểu 550W (khuyến nghị 650W). Chỉ 1 cáp 8-pin"
+  },
+  {
+    "id": "compat-4060-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "4060_PSU_550W",
+    "description": "RTX 4060 cần PSU 550W. TDP chỉ 115W, rất hiệu năng"
+  },
+  {
+    "id": "compat-7900xtx-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "7900XTX_PSU_800W",
+    "description": "RX 7900 XTX cần PSU tối thiểu 800W (khuyến nghị 850W). Dùng 2 cáp 8-pin"
+  },
+  {
+    "id": "compat-7800xt-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "7800XT_PSU_700W",
+    "description": "RX 7800 XT cần PSU tối thiểu 700W. 2 cáp 8-pin"
+  },
+  {
+    "id": "compat-7600-psu",
+    "comp1Category": "gpu",
+    "comp2Category": "psu",
+    "matchKey": "7600_PSU_550W",
+    "description": "RX 7600 cần PSU 550W. Chỉ 1 cáp 8-pin"
+  },
+  {
+    "id": "compat-atx-case",
+    "comp1Category": "mainboard",
+    "comp2Category": "case",
+    "matchKey": "ATX_CASE",
+    "description": "Mainboard ATX cần case ATX Mid-Tower trở lên. Không vừa mATX hoặc ITX case"
+  },
+  {
+    "id": "compat-matx-case",
+    "comp1Category": "mainboard",
+    "comp2Category": "case",
+    "matchKey": "MATX_CASE",
+    "description": "Mainboard mATX vừa case ATX và mATX. Không vừa Mini-ITX case"
+  },
+  {
+    "id": "compat-itx-case",
+    "comp1Category": "mainboard",
+    "comp2Category": "case",
+    "matchKey": "ITX_CASE",
+    "description": "Mainboard Mini-ITX vừa mọi case, nhưng tối ưu cho SFF/Mini-ITX case"
+  },
+  {
+    "id": "compat-gpu-length",
+    "comp1Category": "gpu",
+    "comp2Category": "case",
+    "matchKey": "GPU_LENGTH",
+    "description": "Kiểm tra chiều dài GPU vs case clearance. RTX 4090 dài ~340mm, cần case hỗ trợ >350mm"
+  },
+  {
+    "id": "compat-cooler-height",
+    "comp1Category": "cooler",
+    "comp2Category": "case",
+    "matchKey": "COOLER_HEIGHT",
+    "description": "Kiểm tra chiều cao cooler vs case clearance. NH-D15 cao 165mm, cần case hỗ trợ >165mm"
+  },
+  {
+    "id": "compat-aio-rad",
+    "comp1Category": "cooler",
+    "comp2Category": "case",
+    "matchKey": "AIO_RADIATOR",
+    "description": "Kiểm tra hỗ trợ radiator AIO: 240/280/360mm. Lắp top hoặc front tùy case"
+  },
+  {
+    "id": "compat-sfx-psu",
+    "comp1Category": "psu",
+    "comp2Category": "case",
+    "matchKey": "SFX_PSU",
+    "description": "Case ITX/SFF thường cần PSU SFX/SFX-L. ATX PSU không vừa case nhỏ"
+  },
+  {
+    "id": "compat-cooler-lga1700",
+    "comp1Category": "cooler",
+    "comp2Category": "cpu",
+    "matchKey": "COOLER_LGA1700",
+    "description": "Cooler cần hỗ trợ LGA 1700 mounting. Kiểm tra bracket kit đi kèm hoặc mua riêng"
+  },
+  {
+    "id": "compat-cooler-am5",
+    "comp1Category": "cooler",
+    "comp2Category": "cpu",
+    "matchKey": "COOLER_AM5",
+    "description": "AM5 dùng mounting AM4 compatible. Hầu hết cooler AM4 dùng được AM5 (cần kiểm tra)"
+  },
+  {
+    "id": "compat-cooler-tdp",
+    "comp1Category": "cooler",
+    "comp2Category": "cpu",
+    "matchKey": "COOLER_TDP",
+    "description": "TDP cooler phải >= TDP CPU. i9-14900K (253W PL2) cần cooler 280mm AIO trở lên hoặc NH-D15"
+  },
+  {
+    "id": "compat-ram-cooler",
+    "comp1Category": "ram",
+    "comp2Category": "cooler",
+    "matchKey": "RAM_CLEARANCE",
+    "description": "RAM cao (heatsink RGB) có thể va cooler lớn (NH-D15). Dùng low-profile RAM hoặc cooler offset"
+  },
+  {
+    "id": "compat-m2-pcie5",
+    "comp1Category": "ssd",
+    "comp2Category": "mainboard",
+    "matchKey": "M.2_PCIe5",
+    "description": "SSD PCIe 5.0 cần mainboard có khe M.2 PCIe 5.0 (Z790/X670E). Backward compatible PCIe 4.0"
+  },
+  {
+    "id": "compat-m2-pcie4",
+    "comp1Category": "ssd",
+    "comp2Category": "mainboard",
+    "matchKey": "M.2_PCIe4",
+    "description": "SSD PCIe 4.0 dùng được trên hầu hết mainboard modern (B550+/B660+). Khe M.2 PCIe 3.0 sẽ giảm tốc"
+  },
+  {
+    "id": "compat-sata-port",
+    "comp1Category": "ssd",
+    "comp2Category": "mainboard",
+    "matchKey": "SATA",
+    "description": "SSD SATA 2.5\" cần cáp SATA + nguồn SATA. Khe M.2 SATA (nếu có) cũng dùng được"
+  },
+  {
+    "id": "compat-m2-slots",
+    "comp1Category": "ssd",
+    "comp2Category": "mainboard",
+    "matchKey": "M2_SLOT_COUNT",
+    "description": "Kiểm tra số khe M.2 trên mainboard. Budget board thường chỉ 1-2 khe, high-end 4-5 khe"
+  },
+  {
+    "id": "compat-pcie5-gpu",
+    "comp1Category": "gpu",
+    "comp2Category": "mainboard",
+    "matchKey": "PCIe5",
+    "description": "GPU hiện tại dùng PCIe 4.0 x16. PCIe 5.0 x16 cho future GPU. Backward compatible"
+  },
+  {
+    "id": "compat-pcie4-gpu",
+    "comp1Category": "gpu",
+    "comp2Category": "mainboard",
+    "matchKey": "PCIe4",
+    "description": "GPU PCIe 4.0 dùng được khe PCIe 3.0 (giảm ~1-3% hiệu năng, không đáng kể)"
+  },
+  {
+    "id": "compat-z790-oc",
+    "comp1Category": "cpu",
+    "comp2Category": "mainboard",
+    "matchKey": "Z790_OC",
+    "description": "CPU K/KF (unlocked) cần chipset Z790/Z690 để ép xung. B760/H770 KHÔNG ép xung được CPU"
+  },
+  {
+    "id": "compat-x670e-features",
+    "comp1Category": "cpu",
+    "comp2Category": "mainboard",
+    "matchKey": "X670E_FULL_PCIE5",
+    "description": "X670E có PCIe 5.0 cho cả GPU + SSD. B650/B650E chỉ PCIe 5.0 cho SSD (tùy board)"
+  },
+  {
+    "id": "compat-b550-pcie",
+    "comp1Category": "cpu",
+    "comp2Category": "mainboard",
+    "matchKey": "B550_PCIE4",
+    "description": "B550 chỉ 1 khe M.2 PCIe 4.0 (từ CPU) + 1 khe PCIe 3.0 (từ chipset)"
+  },
+  {
+    "id": "compat-psu-80plus",
+    "comp1Category": "psu",
+    "comp2Category": "psu",
+    "matchKey": "80PLUS_RATING",
+    "description": "80+ Bronze: 82-85% hiệu suất, Gold: 87-90%, Platinum: 90-94%, Titanium: 92-96%"
+  },
+  {
+    "id": "compat-psu-modular",
+    "comp1Category": "psu",
+    "comp2Category": "case",
+    "matchKey": "PSU_MODULAR",
+    "description": "Full Modular PSU dễ đi dây, cáp sạch hơn. Non-modular rẻ hơn nhưng nhiều dây thừa"
+  },
+  {
+    "id": "compat-psu-atx3",
+    "comp1Category": "psu",
+    "comp2Category": "gpu",
+    "matchKey": "ATX3_12VHPWR",
+    "description": "PSU ATX 3.0 có sẵn cáp 12VHPWR cho RTX 40 series. Non-ATX3 cần adapter 3x8-pin"
+  },
+  {
+    "id": "compat-hdmi21",
+    "comp1Category": "gpu",
+    "comp2Category": "monitor",
+    "matchKey": "HDMI_2.1",
+    "description": "HDMI 2.1 cần cho 4K 120Hz. RTX 4000 + RX 7000 đều hỗ trợ HDMI 2.1"
+  },
+  {
+    "id": "compat-dp14",
+    "comp1Category": "gpu",
+    "comp2Category": "monitor",
+    "matchKey": "DP_1.4",
+    "description": "DisplayPort 1.4 hỗ trợ 4K 120Hz, 1440p 240Hz. DSC cho 4K 240Hz"
+  },
+  {
+    "id": "compat-gsync",
+    "comp1Category": "gpu",
+    "comp2Category": "monitor",
+    "matchKey": "GSYNC_FREESYNC",
+    "description": "NVIDIA GPU + FreeSync monitor: dùng G-Sync Compatible mode. AMD GPU + FreeSync: native support"
+  },
+  {
+    "id": "compat-case-airflow",
+    "comp1Category": "case",
+    "comp2Category": "cooler",
+    "matchKey": "CASE_AIRFLOW",
+    "description": "Case mesh front panel tốt hơn kính cường lực cho airflow. Tối thiểu 2 quạt intake + 1 exhaust"
+  },
+  {
+    "id": "compat-fan-config",
+    "comp1Category": "case",
+    "comp2Category": "cooler",
+    "matchKey": "FAN_CONFIG",
+    "description": "Setup quạt lý tưởng: front intake (lọc bụi), top/rear exhaust. Positive pressure giảm bụi"
+  },
+  {
+    "id": "compat-thermal-paste",
+    "comp1Category": "cooler",
+    "comp2Category": "cpu",
+    "matchKey": "THERMAL_PASTE",
+    "description": "Hầu hết cooler đi kèm keo tản nhiệt. Nên thay bằng Thermal Grizzly Kryonaut hoặc Noctua NT-H1"
+  },
+  {
+    "id": "compat-expo-xmp",
+    "comp1Category": "ram",
+    "comp2Category": "mainboard",
+    "matchKey": "EXPO_XMP",
+    "description": "AMD EXPO cho DDR5 AM5, Intel XMP cho DDR5 Intel. Nhiều RAM hỗ trợ cả 2 profiles"
+  },
+  {
+    "id": "compat-ram-4dimm",
+    "comp1Category": "ram",
+    "comp2Category": "mainboard",
+    "matchKey": "RAM_4DIMM",
+    "description": "4 khe RAM: cắm 2 thanh ở A2+B2 (khe 2 và 4). Đa số không cần cắm đầy 4 thanh"
+  },
+  {
+    "id": "compat-bottleneck-cpu-gpu",
+    "comp1Category": "cpu",
+    "comp2Category": "gpu",
+    "matchKey": "BOTTLENECK",
+    "description": "Tránh bottleneck: i3/R3 + RTX 4080 sẽ bị CPU bottleneck. i5/R5 đủ cho đến RTX 4070 Ti Super"
+  },
+  {
+    "id": "compat-bottleneck-1080p",
+    "comp1Category": "cpu",
+    "comp2Category": "gpu",
+    "matchKey": "BOTTLENECK_1080P",
+    "description": "Ở 1080p, CPU quan trọng hơn (CPU-bound). Ở 4K, GPU quan trọng hơn (GPU-bound)"
+  },
+  {
+    "id": "compat-igpu-necessity",
+    "comp1Category": "cpu",
+    "comp2Category": "gpu",
+    "matchKey": "IGPU_REQUIREMENT",
+    "description": "CPU không có iGPU (F/KF model) BẮT BUỘC cần card đồ họa rời. Không có hình nếu không có GPU"
+  },
+  {
+    "id": "compat-pcie-gen",
+    "comp1Category": "gpu",
+    "comp2Category": "mainboard",
+    "matchKey": "PCIE_BACKWARD",
+    "description": "PCIe backward compatible: GPU PCIe 4.0 chạy trên khe PCIe 3.0, chỉ giảm 1-3% performance"
+  }
+]

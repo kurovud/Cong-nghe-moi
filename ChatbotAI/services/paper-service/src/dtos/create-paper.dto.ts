@@ -1,0 +1,1 @@
+export { createProductSchema, createBuildSchema, createFaqSchema, createKnowledgeSchema } from "@chatbot/common";

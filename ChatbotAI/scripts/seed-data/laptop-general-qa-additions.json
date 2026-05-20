@@ -1,0 +1,173 @@
+[{
+        "id": "qa-laptop-vs-pc-1",
+        "questions": [
+            "laptop hay pc tốt hơn?",
+            "tại sao cùng tiền pc lại mạnh hơn laptop?",
+            "nên mua laptop gaming hay build pc?",
+            "laptop vs pc so sánh"
+        ],
+        "answer": "📊 **Laptop vs PC - So Sánh Chi Tiết:**\n\n**Cùng tiền 15 triệu:**\n- **Laptop**: i7 gen 12 + RTX 4060 (15T) = 1440p Medium 60fps\n- **PC Build**: i5-12400F + RTX 4070 (15T) = 1440p High 80fps\n- **PC mạnh hơn 30-40% FPS** ← Lý do?\n\n**Tại sao PC mạnh hơn:**\n1. Laptop phải chia không gian → compact, tản nhiệt kém\n2. PC chuyên dụng tản nhiệt → CPU/GPU không throttle\n3. Laptop GPU bản mobile (weak hơn 30%)\n4. Laptop CPU bạn hạn + PL (power limit) 45W\n5. PC CPU full power 125W+\n\n**Bảng So Sánh:**\n| Tiêu Chí | Laptop | PC |\n|----------|--------|----|\n| **Hiệu năng** | 70% FPS | 100% FPS |\n| **Tử lạnh điện** | 80W | 650W |\n| **Di động** | Yes ✓ | Cứng ❌ |\n| **Giá** | Đắt | Rẻ 20% |\n| **Upgrade** | Khó | Dễ |\n| **Bảo trì** | Đắt | Rẻ |\n\n**Khi nên mua Laptop:**\n- ✅ Hay di chuyển, học online\n- ✅ Cần portability (travel, café)\n- ✅ Không chơi game nặng\n- ✅ Setup nhanh, plug & play\n\n**Khi nên mua PC:**\n- ✅ Gaming serious (FPS cao)\n- ✅ Workstation (rendering, 3D, video edit)\n- ✅ Stream + play cùng lúc\n- ✅ Dùng lâu, upgrade dễ\n\n**Kết luận:** Laptop tiện lợi, PC mạnh mẽ. Chọn dựa vào lifestyle!",
+        "intent": "compare",
+        "agent": "advisor",
+        "tags": ["laptop", "pc", "comparison", "portability", "performance"],
+        "priority": 9
+    },
+    {
+        "id": "qa-laptop-battery-1",
+        "questions": [
+            "pin laptop dùng được mấy tiếng?",
+            "battery laptop thực tế mấy giờ?",
+            "laptop pin bao lâu khi dùng bình thường?"
+        ],
+        "answer": "🔋 **Pin Laptop - Thực Tế vs Quảng Cáo**\n\n**Quảng cáo vs Thực tế:**\n| Tình Huống | Quảng Cáo | Thực Tế |\n|-----------|----------|----------|\n| **Lướt web** | 8-10h | 6-7h |\n| **Làm Word/Excel** | 10h | 7-8h |\n| **YouTube 1080p** | 8h | 4-5h |\n| **Gaming** | 2-3h | 1.5-2h |\n| **Video edit** | 3-4h | 1.5-2h |\n\n**Lý do pin nhanh hết:**\n1. Màn hình 1440p hao pin 30% hơn FHD\n2. CPU/GPU load cao = TDP tăng\n3. Wifi/Bluetooth liên tục kết nối\n4. 50% công suất để tản nhiệt\n5. Windows background tasks\n\n**Tips Kéo Dài Pin:**\n- Giảm brightness xuống 40% = +2h pin ✓\n- Dùng Power Saver mode = +1.5h\n- Tắt Wifi khi không cần = +30 phút\n- Đóng ứng dụng background = +20 phút\n\n**Macbook vs Windows laptop:**\n- **Macbook**: 12-15h thực tế (tối ưu hóa tốt)\n- **Dell/HP Windows**: 6-10h tùy model\n- Macbook pin gấp đôi nhờ ARM M1/M2 chip\n\n**Bảo dưỡng pin:**\n- ✅ Sạc liên tục 24/24 = OK (laptop có BMS tự chỉnh)\n- ❌ Không sạc 6 tháng = pin chai\n- Sạc 20-80% = pin lâu nhất\n\n**Khi nào thay pin:**\n- Pin dùng <3h sau 2 năm = cần thay\n- Pin tuổi 3+ năm = suy giảm 30-50%\n- Thay pin tầm 800k-1.5T",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["laptop", "battery", "endurance", "tips"],
+        "priority": 8
+    },
+    {
+        "id": "qa-laptop-upgrade-1",
+        "questions": [
+            "laptop nâng cấp được như pc không?",
+            "có thể thay cpu laptop không?",
+            "upgrade ram laptop được không?"
+        ],
+        "answer": "🔧 **Upgrade Laptop vs PC - Khác Biệt Lớn**\n\n**So Sánh:**\n| Component | Laptop | PC |\n|-----------|--------|----|\n| **RAM** | ✓ Có thể | ✓ Dễ |\n| **SSD** | ✓ Có thể | ✓ Dễ |\n| **CPU** | ❌ Hàn cứng | ✓ Tháo lắp |\n| **GPU** | ❌ Hàn cứng | ✓ Swap dễ |\n| **Tản nhiệt** | ⚠️ Khó | ✓ Dễ |\n\n**Laptop có thể upgrade:**\n- ✅ **RAM**: Thay từ 8GB → 16GB (300k)\n- ✅ **SSD**: Thay từ 512GB → 1TB (400k)\n- ⚠️ Thay lắp khó, cần kỹ năng\n\n**Laptop KHÔNG thể upgrade:**\n- ❌ **CPU**: Hàn trực tiếp board\n- ❌ **GPU**: Mobile chip, không tháo được\n- ❌ **Mainboard**: Tất cả là một khối\n\n**Ví dụ thực tế:**\n```\nLaptop Dell 2020 (i5-10400H, RTX 2060)\n→ Muốn upgrade CPU/GPU\n→ Không thể, phải mua laptop mới\n→ Loss của i5 2020: ~4T\n\nPC 2020 (i5-10400, RTX 2060)\n→ Muốn upgrade\n→ Thay i7-12700K (5T) + RTX 4070 (5.5T)\n→ Bán linh kiện cũ (~2T) → net cost 8.5T\n→ PC nâng cấp như mới!\n```\n\n**Kết luận:**\n- Laptop: Upgrade nhỏ (RAM/SSD) được\n- PC: Upgrade lớn (CPU/GPU) dễ dàng\n- Nếu muốn nâng cấp → PC lợi hơn\n- Laptop là \"cái máy tính\" (một khối), PC là \"bộ linh kiện\"",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["laptop", "upgrade", "component", "maintenance"],
+        "priority": 8
+    },
+    {
+        "id": "qa-student-budget-1",
+        "questions": [
+            "sinh viên nên mua máy như nào?",
+            "em là sinh viên, máy 5-10 triệu dùng được không?",
+            "laptop cho học online và làm word excel",
+            "máy tính cho sinh viên kinh tế, luật"
+        ],
+        "answer": "🎓 **Máy Tính Cho Sinh Viên - Hướng Dẫn**\n\n**Nhu cầu by ngành:**\n\n**Kinh tế / Kinh doanh:**\n- ✅ Cần: Excel, PowerPoint, SQL\n- ✅ CPU tốt (xử lý dữ liệu)\n- ✅ RAM 16GB (multiple apps)\n- 💻 Config: i5-12400F + 16GB = 8-10T\n\n**Luật / Chính trị:**\n- ✅ Cần: Word, PDF, Legal software\n- ✅ Không cần GPU mạnh\n- ✅ RAM 8GB ok\n- 💻 Config: i3-12100F + 8GB = 5-6T\n\n**Sư phạm / Giáo dục:**\n- ✅ Cần: Office, video conference\n- ✅ Kích thước nhỏ (di động)\n- ✅ Pin lâu (dùng cả ngày)\n- 💻 Laptop i5 8GB = 10-12T\n\n**Công nghệ / IT:**\n- ✅ Cần: IDE, compiler, virtual machine\n- ✅ CPU/RAM cao (multitasking)\n- ✅ SSD bắt buộc (dev environment)\n- 💻 Config: i7-12700 + 16GB + 512GB SSD = 12-15T\n\n**Kỹ thuật / Design:**\n- ✅ Cần: GPU (editing, rendering)\n- ✅ RAM 16GB (Photoshop, CAD)\n- ✅ SSD 1TB (project files)\n- 💻 Laptop i7 RTX 4060 = 15-18T\n\n**Bảng Recommendation:**\n| Ngành | Budget | Setup | Lý do |\n|-------|--------|-------|-------|\n| **Luật/Chính trị** | 5-6T | i3 + 8GB | Excel, Word ok |\n| **Kinh tế** | 8-10T | i5 + 16GB | Data processing |\n| **Sư phạm** | 10-12T | i5 Laptop | Portable |\n| **IT/Tech** | 12-15T | i7 + SSD | Dev environment |\n| **Design/Media** | 15-20T | i7 + RTX 4060 | Rendering |\n\n**Khuyến nghị cho sinh viên:**\n1. **Năm 1-2**: Mua máy phù hợp ngành\n2. **Năm 3-4**: Upgrade SSD/RAM nếu cần\n3. **Budget chặt**: Mua laptop entry (8T), upgrade RAM sau (300k)\n4. **Hỗ trợ vay**: PTIT, ĐH Bách Khoa có chương trình vay 0% ✓\n\n**Lời khuyên:**\n- Đừng mua \"mạnh quá\" (overkill)\n- Mua phù hợp ngành = tiết kiệm tiền\n- Upgrade RAM sau rẻ hơn mua máy mạnh từ đầu",
+        "intent": "recommendation",
+        "agent": "advisor",
+        "tags": ["student", "budget", "ngành", "recommendation"],
+        "priority": 8
+    },
+    {
+        "id": "qa-livestream-setup-1",
+        "questions": [
+            "mua máy để livestream bán hàng trên facebook",
+            "cần máy tính loại nào để stream bán quần áo?",
+            "laptop để livestream + bán hàng"
+        ],
+        "answer": "🎥 **Máy Tính Cho Livestream Bán Hàng - Setup**\n\n**Nhu cầu Livestream:**\n- ✅ Encode video real-time (CPU intensive)\n- ✅ Open browser + OBS + chat = multitask\n- ✅ Frame rate 30fps stable (internet limited anyway)\n- ✅ Resolution 1080p ok (720p also fine)\n\n**CPU Requirement:**\n- **i7-12700H** (laptop) hoặc **i7-12700** (desktop) = ok\n- i5-12400 = borderline (may lag)\n- i3 = NO (encoding too slow)\n\n**PC vs Laptop so sánh:**\n| Aspect | PC | Laptop |\n|--------|----|---------|\n| **Giá** | 10-12T | 15-18T (same CPU) |\n| **Chất lượng stream** | Tuyệt vời | Ok (throttle risk) |\n| **Di động** | Cứng ❌ | Có ✓ |\n| **Setup** | Fixed | Flex |\n\n**Recommended Setup cho Bán Hàng:**\n```\nOption 1 - PC (Best Value):\n- CPU: i7-12700 (6T)\n- GPU: RTX 3060 (2.5T) ← encode video\n- RAM: 16GB (800k)\n- SSD: 512GB (400k)\n- PSU: 650W (1.5T)\n- Case: (600k)\nTOTAL: ~12T\n\nOption 2 - Laptop (Mobile):\n- Laptop i7-12700H + RTX 4060 (16T)\n- TẬT HƠN nhưng portable\n\nOption 3 - Hybrid:\n- Laptop as main (day job)\n- PC at home for streaming (night)\n```\n\n**Camera & Mic Setup:**\n- 📷 **Camera**: Webcam Logitech 4K (2T) hoặc Mirrorless (5-8T)\n- 🎤 **Mic**: USB condenser (500k) hoặc XLR (1-2T)\n- 💡 **Lighting**: LED ring light (300-500k)\n- **Total extras**: 1-3T (tùy quality)\n\n**Software:**\n- ✅ OBS Studio: FREE (best)\n- ✅ Streamlabs: FREE (easier)\n- ✅ XSplit: Paid (professional)\n\n**Internet:**\n- **Upstream speed**: >=3 Mbps (for 720p 30fps)\n- **Downstream**: >=5 Mbps (chat, alerts)\n- Wifi ok but wired LAN better (stable)\n\n**Stream Quality Tips:**\n- 720p 30fps = best balance (audience ok, cpu easy)\n- 1080p 30fps = needs i7 + good internet\n- 1080p 60fps = overkill for Facebook shop\n\n**Khuyến nghị cho bán hàng:**\n1. **Ngân sách 12T**: Build PC (best value, dùng lâu)\n2. **Ngân sách 15T**: Laptop i7 (convenient, mobile)\n3. **Thêm camera + mic**: 1.5-2T nữa\n\n**Kết luận:** Streaming không cần GPU flagship, i7 CPU là chính. PC rẻ hơn laptop cùng hiệu năng!",
+        "intent": "recommendation",
+        "agent": "advisor",
+        "tags": ["livestream", "business", "streaming", "facebook", "setup"],
+        "priority": 8
+    },
+    {
+        "id": "qa-laptop-screen-1",
+        "questions": [
+            "màn hình laptop chống chói hay gương tốt hơn?",
+            "nên chọn màn hình matte hay glossy?",
+            "màn hình laptop nào tốt cho mắt?"
+        ],
+        "answer": "🖥️ **Loại Màn Hình Laptop - Matte vs Glossy**\n\n**So Sánh:**\n| Tiêu Chí | Matte (Chống Chói) | Glossy (Gương) |\n|----------|-------------------|----------------|\n| **Độ sáng** | Kém hơn 10-15% | Sáng rực rỡ |\n| **Phản chiếu** | Ít ❌ | Nhiều 🪞 |\n| **Chi tiết ảnh** | Ok | Sharp hơn |\n| **Màu sắc** | Đẹp | Đẹp hơn |\n| **Cho mắt** | ✓ Tốt | Mệt |\n| **Indoor** | ✓ Tốt | Ok |\n| **Outdoor** | ✓ Tuyệt vời | Như gương |\n\n**Matte (Chống Chói) - TỐI HƠNFOR WORK:**\n- ✅ Tư vấn: TỐT cho mắt (ít ánh sáng phản chiếu)\n- ✅ Công ty/văn phòng: matte tốt hơn\n- ✅ Dùng lâu: mắt ít mệt\n- ❌ Màu sắc: kém hơn glossy 5%\n- ❌ Sáng: kém hơn, cần chiều sáng tốt\n\n**Glossy (Gương) - DISPLAY TỐT HƠN:**\n- ✅ Màu: vivid, contrast cao\n- ✅ Gaming/photo edit: glossy tốt hơn\n- ✅ Outdoor: sáng hơn (nếu không bị chói)\n- ❌ Chính: phản chiếu ảnh mặt (chói)\n- ❌ Văn phòng: mệt mắt từ phản chiếu\n\n**Khuyến nghị by use case:**\n- **Work/Office**: Matte 💯\n- **Photo/Video Edit**: Glossy 💯\n- **Gaming**: Glossy 💯\n- **Balanced**: Matte (tốt hơn cho health)\n\n**Panel Type (IPS vs TN):**\n| Panel | Sắc Màu | Góc Nhìn | Phản Ứng | Giá |\n|-------|---------|---------|---------|-----|\n| **IPS** | Tuyệt vời | 178° | Chậm | Đắt |\n| **TN** | Bình thường | 160° | Nhanh | Rẻ |\n| **VA** | Tuyệt vời | Ok | Chậm | Đắt |\n\n**Độ Phân Giải:**\n- **1080p (FHD)**: Ok, pin lâu hơn\n- **1440p (QHD)**: Bình thường (16\" lên)\n- **1600p**: Siêu sắc nét\n- ⚠️ Cao = pin nhanh hết\n\n**Tần số Refresh:**\n- **60Hz**: Standard, ok\n- **120Hz**: Smooth hơn, pin hao\n- **144Hz**: Overkill laptop (laptop = casual)\n\n**Lời khuyên cuối:**\n👉 **Work/Study**: Matte IPS 1080p 60Hz ✓ (balance all)\n👉 **Photo/Edit**: Glossy IPS 1440p 60Hz ✓ (color accuracy)\n👉 **Gaming**: Glossy 1440p 144Hz ✓ (but laptop overkill)",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["laptop", "screen", "matte", "glossy", "display"],
+        "priority": 7
+    },
+    {
+        "id": "qa-compatibility-cpu-board-1",
+        "questions": [
+            "làm sao biết cpu có lắp được mainboard không?",
+            "socket cpu là gì?",
+            "cpu i7-13700 có lắp được board b660 không?"
+        ],
+        "answer": "🔌 **Tương Thích CPU vs Mainboard - Socket Là Chìa Khóa**\n\n**Khái Niệm Socket:**\nSocket = \"cái lỗ\" trên mainboard\nCPU = \"cái chân\" của processor\nChúng phải khớp nhau → mới lắp được!\n\n**Socket Intel Hiện Nay:**\n| Socket | Gen CPU | Board | Lắp Được? |\n|--------|---------|-------|----------|\n| **LGA1700** | 12, 13, 14 | B660, Z790 | ✅ Yes |\n| **LGA1200** | 10, 11 | B560, Z590 | ✅ Yes (nhưng cũ) |\n| **LGA115x** | Core 2 - i7-9xxx | H97, Z97 | ✅ Yes (quá cũ) |\n\n**Socket AMD Hiện Nay:**\n| Socket | Gen CPU | Board | Lắp Được? |\n|--------|---------|-------|----------|\n| **AM5** | Ryzen 7000 | B650, X870 | ✅ Yes |\n| **AM4** | Ryzen 3000-5000 | B550, X570 | ✅ Yes (nhưng hết support) |\n\n**Ví Dụ KHÔNG Lắp Được:**\n```\n❌ i7-13700 (LGA1700) + B560 (LGA1200) = KO\n   Socket khác, lỗ không match\n\n❌ Ryzen 7 5800X (AM4) + X870 Board (AM5) = KO\n   Gen cũ không compatible AM5\n\n✅ i7-13700 (LGA1700) + B760 (LGA1700) = OK\n   Socket giống, generation compatible\n```\n\n**Cách Kiểm Tra:**\n1. **Tìm socket CPU**: Google \"i7-13700 socket\" → LGA1700\n2. **Tìm socket board**: Google \"B760 socket\" → LGA1700\n3. **Match**: LGA1700 = LGA1700 ✅ → Lắp được!\n\n**Intel Gen & Socket Map:**\n```\nGen 10-11: LGA1200 (Core i5-10400, i7-11700)\nGen 12:    LGA1700 (Core i5-12400, i7-12700)\nGen 13:    LGA1700 (Core i5-13400, i7-13700)\nGen 14:    LGA1700 (Core i5-14400, i7-14700)\n```\n\n**Board Chipset & Socket:**\n```\nIntel:\n- B660 = LGA1700 + Gen 12/13 support\n- B760 = LGA1700 + Gen 12/13/14 support (mới)\n- Z790 = LGA1700 + Gen 12/13/14 + OC support\n\nAMD:\n- B550 = AM4 + Ryzen 3000-5000 support\n- X870 = AM5 + Ryzen 7000 support\n```\n\n**CPU vs Board Compatibility Matrix:**\n| CPU | Socket | Require Board | Compatible |\n|-----|--------|---------------|-------------|\n| **i5-12400F** | LGA1700 | B660, B760, Z790 | ✅ All |\n| **i7-13700K** | LGA1700 | B760, Z790 | ✅ Both |\n| **i9-14900KS** | LGA1700 | Z790 | ✅ (needs Z for OC) |\n| **Ryzen 5 5600X** | AM4 | B550, X570 | ✅ All |\n| **Ryzen 7 7800X3D** | AM5 | B650, X870 | ✅ All |\n\n**Bảng Quick Check:**\n👉 **Gen 12-14 Intel**: LGA1700 socket (B660, B760, Z790 all ok)\n👉 **Ryzen 5000**: AM4 socket (B550, X570 ok)\n👉 **Ryzen 7000**: AM5 socket (B650, X870 ok)\n\n**Lưu ý:** Mua CPU + Board cùng \"bộ\" (generation) để chắc compatible!",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["compatibility", "socket", "cpu", "mainboard"],
+        "priority": 9
+    },
+    {
+        "id": "qa-power-supply-safety-1",
+        "questions": [
+            "nguồn 450w có đủ cho card đồ họa rtx không?",
+            "psu chỉ định có làm cháy máy không?",
+            "nguồn bao nhiêu watt là đủ an toàn?"
+        ],
+        "answer": "⚡ **Nguồn Điện (PSU) - Đủ Hay Thiếu?**\n\n**Sơ Lược TDP (Power Draw):**\n| Component | TDP | Ghi Chú |\n|-----------|-----|----------|\n| CPU i5-12400F | 65W | Base |\n| CPU i7-13700K | 125W | Max |\n| GPU RTX 3060 | 170W | Max |\n| GPU RTX 4070 | 200W | Max |\n| GPU RTX 4090 | 450W | Extreme |\n| Board + RAM | 30-50W | |\n| SSD + fans | 20-30W | |\n| **TOTAL SYSTEM** | **250-850W** | Tùy config |\n\n**Ví Dụ Thực Tế:**\n```\nConfig 1: i5-12400F + RTX 4060\n- CPU: 65W\n- GPU: 130W\n- Rest: 50W\n- Total: ~250W real draw\n- PSU recommend: 550W+ ✓\n- 450W: Risky (80% load) ⚠️\n\nConfig 2: i7-13700K + RTX 4090\n- CPU: 125W\n- GPU: 450W\n- Rest: 50W\n- Total: ~625W real draw\n- PSU recommend: 850W+ ✓\n- 650W: Tight, throttle risk ⚠️\n```\n\n**Safety Margin:**\n- ✅ **Safe**: PSU = System Draw × 1.3-1.5\n- ⚠️ **Risky**: PSU = System Draw × 1.1-1.2\n- ❌ **Danger**: PSU < System Draw (crash)\n\n**Nếu Chỉ Định Quá Thấp:**\n1. **Không \"cháy\"** (PSU có protection)\n2. **Nhưng** system sẽ:\n   - Restart randomly\n   - Tụt điện áp\n   - PSU tắt bảo vệ → no boot\n   - Game crash (power loss)\n   - Long term: PSU stress → die sớm\n\n**RTX 3060 với PSU khác nhau:**\n```\n❌ 450W: KHÔNG ĐƯỢC (cận cạnh)\n⚠️ 550W: Bare minimum (80% load)\n✅ 650W: Recommended (65% load, safe)\n✅ 750W: Ideal (50% load, very safe)\n```\n\n**Rating PSU:**\n- **Bronze**: 80% efficiency (thua)\n- **Gold**: 90%+ efficiency (tốt)\n- **Platinum**: 94%+ efficiency (siêu tốt)\n- **Titanium**: 96%+ efficiency (extreme)\n\n**Recommendation by config:**\n| Config | Total Draw | Recommend PSU |\n|--------|-----------|---------------|\n| i3 + GTX 1650 | 200W | 450W Bronze |\n| i5 + RTX 4060 | 250W | 550W Gold |\n| i7 + RTX 4070 | 350W | 650W Gold |\n| i9 + RTX 4080 | 500W | 850W Gold |\n| i9 + RTX 4090 | 625W | 1000W Platinum |\n\n**Nguyên Tắc Vàng:**\n👉 **Mua PSU lớn hơn need 20-30% = safety + futureproof**\n👉 **Lấy Gold cert (dù mắc hơn 200k, nhưng lâu bền)**\n👉 **Đừng tiết kiệm PSU** (hỏng = burn all components)\n\n**Kết luận:** Nguồn không \"cháy\" nhưng chỉ định thiếu = system không ổn định!",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["psu", "power supply", "wattage", "safety", "tdp"],
+        "priority": 9
+    },
+    {
+        "id": "qa-ssd-vs-hdd-1",
+        "questions": [
+            "ssd và hdd khác gì?",
+            "tại sao phải cài windows trên ssd?",
+            "ssd hay hdd tốt hơn cho lưu trữ?",
+            "ổ cứng rắc rối hay ssd rắc rối?"
+        ],
+        "answer": "💾 **SSD vs HDD - Tất Cả Những Gì Bạn Cần Biết**\n\n**So Sánh Nhanh:**\n| Tiêu Chí | SSD | HDD |\n|----------|-----|-----|\n| **Speed** | 3000-7000 MB/s | 100-150 MB/s |\n| **Boot time** | 10-15s | 30-60s |\n| **Game load** | 5-10s | 30-60s |\n| **Giá/GB** | 1.2k/GB | 0.2k/GB |\n| **Độ bền** | 20+ năm | 5-10 năm |\n| **Nhiệt** | Mát ✓ | Nóng |\n| **Tiếng ồn** | Im lặng | Có tiếng |\n| **Pin** | Ít hao | Hao nhiều |\n| **Shock** | Bền | Dễ hỏng |\n\n**Tại Sao Phải Windows Trên SSD:**\n```\nSSD C:\\ → Windows + apps\n- Boot time: 10s (SSD)\n- Boot time: 60s (HDD)\n- Windows responsiveness: Day/night difference\n\nHDD D:\\ → Files/Games (ok)\n- Game load từ HDD: 30-60s\n- Game load từ SSD: 5-10s\n- Gameplay: Ok (nhưng load chậm)\n```\n\n**Ví Dụ Thực Tế:**\n\n**Setup 1 (Sai):**\n```\nSSD 256GB (Windows + 5 apps) = đầy\nHDD 1TB (Games + files)\n\nKết quả:\n- Windows mục đích = mượt 👍\n- Game load chậm 👎\n- SSD đầy, slow app = 👎\n```\n\n**Setup 2 (Đúng) - Recommend:**\n```\nSSD 1TB:\n  - Windows: 150GB\n  - Apps: 100GB\n  - Frequently used games: 300GB\n  - Free: 450GB (buffer)\n\nHDD 2TB (optional):\n  - Archived games\n  - Backups\n  - Large files\n\nKết quả:\n- Windows tốc độ ✅\n- Games tốc độ ✅\n- Storage đủ ✅\n```\n\n**Tuổi Thọ & Tin Cậy:**\n- **SSD**: 20+ năm (no moving parts)\n- **HDD**: 5-10 năm (mechanical wear)\n- HDD từng mất điện = risk nguy hiểm\n- SSD an toàn hơn vứt từ cao\n\n**Khi Nào Dùng Gì:**\n✅ **SSD (MUST):**\n- Windows + OS\n- Apps (Visual Studio, Photoshop)\n- Active projects\n- Frequently played games\n\n✅ **HDD (Optional, \"Cold Storage\"):**\n- Archive games (not played)\n- Backups\n- Old projects\n- Media libraries\n- Budget storage\n\n**Speed Test:**\n```\nGame A (SSD):\n- Load time: 8s ✓\n- Gameplay: Smooth\n\nGame A (HDD):\n- Load time: 45s 😫\n- Gameplay: Still smooth (HDD fast enough)\n\n→ HDD ok untuk gameplay, tapi load chậm\n→ SSD: Load nhanh + gameplay mượt\n```\n\n**Recommendation by budget:**\n| Budget | Setup | Speed | Storage |\n|--------|-------|-------|----------|\n| **7T** | 256GB SSD only | Fast ok | Limited ⚠️ |\n| **10T** | 512GB SSD only | Fast | OK ✓ |\n| **12T** | 1TB SSD only | Fast | Good ✓✓ |\n| **15T** | 1TB SSD + 2TB HDD | Fast + Huge | Perfect ✓✓✓ |\n\n**Lời Khuyên:**\n👉 **Minimum**: 512GB SSD (Windows + apps + 2-3 games)\n👉 **Recommended**: 1TB SSD (comfortable breathing room)\n👉 **Ideal**: 1TB SSD + 2TB HDD (fast + huge storage)\n👉 **NEVER**: HDD for Windows (too slow experience)\n\n**Bottom line:** SSD = MUST for Windows, HDD = optional backup!",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["ssd", "hdd", "storage", "speed", "comparison"],
+        "priority": 9
+    },
+    {
+        "id": "qa-water-cooling-1",
+        "questions": [
+            "tản nhiệt nước an toàn không?",
+            "nước rò ra thì sao?",
+            "nên dùng tản nhiệt nước hay gió?"
+        ],
+        "answer": "❄️ **Tản Nhiệt Nước - An Toàn Hay Rủi Ro?**\n\n**Tản Nhiệt Nước vs Gió:**\n| Tiêu Chí | Nước (AIO) | Gió (Air) |\n|----------|-----------|----------|\n| **Hiệu năng** | 5-10% hơn | Baseline |\n| **Nhiệt độ** | 2-5°C mát hơn | Standard |\n| **Tiếng ồn** | Im lặng | Quạt kêu |\n| **Bảo trì** | Tầm 3-5 năm | 10+ năm |\n| **Rủi ro** | Rò nước ⚠️ | Safe ✓ |\n| **Giá** | 1.5-3T | 300-800k |\n| **Dễ lắp** | Khó | Dễ |\n\n**Loại Water Cooling:**\n\n**1. AIO (All-In-One) - Closed Loop**\n```\nTíc lẻ: \n- Pump + radiator + fan\n- Nước đóng kín (factory sealed)\n- Rất hiếm rò nước (sealed)\n- Popular: Corsair, NZXT, Fractal\n\nAn toàn: 95%+ safe ✓\nRủi ro: Pump die, fan die (rare)\n```\n\n**2. Custom Loop**\n```\nTíc: \n- Bạn tự thiết kế\n- Ống, bơm, nước, radiator riêng lẻ\n- DIY risk (connection leaks) ⚠️\n- Yêu cầu kỹ năng cao\n\nAn toàn: 70%+ (depends on build)\nRủi ro: Leaks từ connection points\n```\n\n**Nếu Nước Rò Ra:**\n```\n90% trường hợp: AIO có protection\n- Leaked water không qua electronics\n- Water path isolated from PCB\n- Worst case: Pump dies, CPU vẫn ok\n\n10% trường hợp (Custom Loop):\n- Water on GPU/Board = SHORT ❌\n- Risk của không kỹ năng build\n```\n\n**Khi Nên Dùng Water Cooling:**\n✅ **Nên:**\n- Overclocker (need tight thermals)\n- Silent PC enthusiast (fans off)\n- High-end CPU (i9 + RTX 4080)\n- Long-term 24/7 use\n\n❌ **KHÔNG nên:**\n- Budget build (tiết kiệm cost)\n- Beginner (complex)\n- Casually gaming (overkill)\n- Di chuyển PC thường xuyên (risk)\n\n**Air Cooling - Simpler Alternative:**\n```\n💨 Recommeded for most:\n- Thermalright PA120 SE (400k) = amazing\n- Noctua NH-D15 (800k) = best\n- Stock Intel cooler = OK for i5\n- Stock AMD cooler = OK for i5-i7\n\nAdvantage:\n- 0 rò nước risk ✓\n- 10+ năm bền ✓\n- 100k maintenance (cleaning) ✓\n- Dễ lắp ✓\n```\n\n**Overclocking + Thermals:**\n```\nStock CPU (65-125W):\n- Air cooler: Dễ dàng\n- Water: Overkill\n\nOverclocked (150-200W):\n- Air cooler: Tight, high temps\n- Water: Necessary ✓\n\n24/7 Rendering (full load):\n- Air cooler: Fans kêu to\n- Water: Silent, steady temps ✓\n```\n\n**Safety Practices (Water Cooling):**\n1. **AIO chỉ**: Đã tested, safe 👍\n2. **Custom loop**: Leak test 24h trước dùng\n3. **Check hàng tháng**: Connections tight\n4. **Drain yearly**: Replace nước (prevents algae)\n5. **Keep far từ edge**: Accident proof\n\n**Recommendation:**\n👉 **For most**: Air cooler (Thermalright/Noctua) = safe + practical\n👉 **Enthusiasts**: AIO (Corsair/NZXT) = cool + quiet\n👉 **Extreme**: Custom loop = risk unless expert\n\n**Bottom Line:** Water cooling an toàn (AIO), nhưng air cooler đủ tốt & simple hơn!",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["cooling", "water", "thermal", "safety"],
+        "priority": 7
+    },
+    {
+        "id": "qa-ports-connectors-1",
+        "questions": [
+            "máy không có cổng lan có lập được wifi không?",
+            "cần mua dây chuyển đổi gì để cắm thêm màn hình?",
+            "usb-c sạc điện thoại được không?"
+        ],
+        "answer": "🔌 **Cổng & Kết Nối - Hướng Dẫn Đầy Đủ**\n\n**Không Có Cổng LAN (Ethernet):**\n✅ **Bắt được Wifi không?**\n- Hầu hết laptop/PC hiện đại có Wifi built-in\n- Không cần Ethernet\n- Nhưng Ethernet ổn định hơn Wifi\n\n**If Cần Ethernet (LAN):**\n- Mua USB Ethernet adapter (150-300k)\n- Cắm vào USB 3.0 → có LAN\n- Speed: 100Mbps ok, 1Gbps tốt\n\n**Add More Monitors:**\n```\nCần mấy cổng output?\n- 1 monitor: 1x HDMI/DisplayPort\n- 2 monitors: 1x HDMI + 1x DisplayPort\n- 3 monitors: HDMI + 2x DisplayPort (on GPU)\n\nNếu GPU chỉ có 1x HDMI:\n- Mua DisplayPort/USB-C converter (300-500k)\n- Convert USB-C → DisplayPort\n- Cắm monitor vào converter\n```\n\n**Dây Chuyển Đổi Thường Cần:**\n| Từ | Sang | Giá | Dùng |\n|----|------|-----|------|\n| USB-C | HDMI | 200k | Monitor |\n| USB-C | DisplayPort | 300k | Monitor 4K |\n| USB-C | USB 3.0 | 150k | Mouse/keyboard |\n| HDMI | DisplayPort | 250k | Monitor |\n| USB-C | Ethernet | 200k | LAN |\n\n**USB-C Sạc Điện Thoại:**\n✅ **Laptop USB-C → Phone OK?**\n- Modern USB-C laptop: Có sạc điện thoại ✓\n- USB-C Power Delivery (60-100W)\n- iPhone: USB-C to Lightning ok ✓\n- Android: USB-C to USB-C perfect ✓\n\n⚠️ **Lưu Ý:**\n- Laptop vừa sạc phone = laptop pin nhanh hết\n- Không nên vừa charge vừa sạc phone (tại work)\n\n**Dạng Cổng Phổ Biến:**\n```\nLaptop Output:\n- HDMI: Standard, mọi monitor ok\n- USB-C: Modern, mỏng gọn\n- DisplayPort: Khó tìm trên laptop\n- VGA: Cũ, hiếm dùng\n\nPC Output:\n- HDMI: Standard\n- DisplayPort: Gaming monitors\n- USB-C: Hiếm\n- VGA: Cổ điển\n\nInput:\n- USB 2.0: Keyboard, mouse (slow)\n- USB 3.0: Fast external drive\n- USB 3.1: Siêu nhanh (1200MB/s)\n- Thunderbolt 3: Mac standard (2400MB/s)\n```\n\n**Chuột Không Dây:**\n```\nDùng pin hay sạc?\n\nPin:\n- AA/AAA pin (lasts 6-12 months)\n- Rẻ (chuột 150-300k)\n- Di động (dùng ở đâu)\n- Popular: Logitech MX Master\n\nSạc điện:\n- Lithium battery\n- 2-3 days charge\n- Đắt hơn (500-1000k)\n- Eco-friendly\n- Popular: Apple Magic Mouse\n\n→ Tùy sở thích\n```\n\n**Bàn Phím Cơ - Switch Type:**\n| Switch | Sound | Tactile Feel | Dùng |\n|--------|-------|--------------|------|\n| **Blue** | Clicky (ồn) | Pronounced | Gaming loud |\n| **Brown** | Quiet | Subtle | Office ✓ |\n| **Red** | Silent | Linear | Gaming/Office |\n| **Black** | Silent | Heavy | Gaming |\n\n**Khuyến nghị:**\n- **Văn phòng**: Brown Switch (ít ồn)\n- **Gaming**: Blue (clicky feedback) hoặc Red (smooth)\n- **Hybrid**: Brown ok cả hai\n\n**Storage External:**\n```\nHard Drive (HDD): 2TB - 8TB, rẻ 300-800k\nSSD External: 1TB - 2TB, 1-2T\n\nSpeed:\n- USB 3.0 HDD: 100-150 MB/s (ok)\n- USB 3.0 SSD: 300-400 MB/s (good)\n- Thunderbolt SSD: 1000+ MB/s (overkill)\n```\n\n**Loa Computer:**\n✅ **Cần sạc riêng không?**\n- **Passive speakers** (powered by 3.5mm): NO (lấy điện từ card sound)\n- **Active speakers** (amp built-in): YES (cần sạc hoặc AC)\n- Hầu hết loa PC hiện đại = Active (cần nguồn)\n\n**Lời Khuyên:**\n👉 **Essential ports**: USB 3.0 x2, HDMI/USB-C output, Headphone jack\n👉 **Nice to have**: SD card reader, Thunderbolt\n👉 **Adapter**: Lúc cần mua, không phải mua trước",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["ports", "connectors", "usb", "hdmi", "peripherals"],
+        "priority": 8
+    },
+    {
+        "id": "qa-storage-capacity-lie-1",
+        "questions": [
+            "mua ổ 500gb sao chỉ thấy 460gb?",
+            "ổ cứng ghi quảng cáo cao nhưng thực tế thấp?",
+            "sao storage bị mất khi mua?"
+        ],
+        "answer": "📊 **Storage Capacity - Tại Sao Mua 1TB Chỉ Có 930GB?**\n\n**Sự Thật (Không Phải Lừa):**\n```\nKhi bạn mua \"500GB\":\n- Nhà sản xuất tính: 1000^3 byte (decimal)\n  500GB = 500,000,000,000 bytes\n\n- Máy tính tính: 1024^3 byte (binary)\n  500GB = 500,000,000,000 / (1024^3)\n  = 465.66 GB (trong máy tính)\n\n→ Lỗ hổng: 500 - 465 = 35GB \"mất\"\n```\n\n**Bảng Chuyển Đổi (Marketing vs Actual):**\n| Marketing | Binary (Thực Tế) | \"Mất\" |\n|-----------|------------------|--------|\n| 256GB | 238GB | 18GB |\n| 512GB | 476GB | 36GB |\n| 1TB | 931GB | 69GB |\n| 2TB | 1.86TB | 138GB |\n| 4TB | 3.73TB | 270GB |\n\n**Ngoài Ra, Windows \"Ăn\" Storage:**\n```\nSSD 1TB thực tế 931GB\nMinús:\n- Windows 11: 150-200GB\n- System files: 50GB\n- Reserve: 100GB (Windows update, temp)\n\nCòn lại: ~500-600GB free\n```\n\n**Ví Dụ PC Builder:**\n```\n1TB SSD mới\n- Total: 931GB (binary)\n- Windows: -170GB\n- Drivers/System: -30GB\n- Reserve: -100GB\n- Free: ~630GB\n\nCó thể cài:\n- Windows: 170GB\n- 3-4 AAA games: 300-400GB (200-100GB/game)\n- Apps: 50-100GB\n- Documents: 20-50GB\n```\n\n**HDD Khác Hơn SSD:**\n```\nSSD 1TB: Manufacturing bias (1000^3)\nHDD 1TB: Sometimes (1000^3), sometimes mix\n\n→ HDD thường \"mất\" ít hơn SSD\n```\n\n**Tại Sao Không Hiệu Chỉnh?**\n- ✅ Hợp pháp (industry standard IEC)\n- ✅ Nhà sản xuất phải comply\n- ❌ Nhưng confusing cho người dùng\n- ❌ EU đang push để công bố rõ ràng\n\n**Cách Kiểm Tra:**\n1. **Storage Settings**:\n   - Windows: Settings > System > Storage\n   - Show actual size (not \"used\")\n\n2. **Properties**:\n   - Right-click drive > Properties\n   - Check \"Total Bytes\"\n\n**Lời Khuyên:**\n👉 **Plan for 80%** capacity available\n👉 **1TB SSD** = plan ~800GB usable (not 1000GB)\n👉 **2TB SSD** = plan ~1.6TB usable\n👉 **Leave 10%** buffer free (performance)\n\n**Không Phải Lừa:**\n❌ **Lừa**: Shop nói \"1TB\" nhưng bị hỏng = scam\n✅ **Bình thường**: Mua \"1TB\", thấy 930GB = expected\n\n**Bottom Line:** Không phải shop lừa, đó là cách tính của máy tính!",
+        "intent": "general",
+        "agent": "advisor",
+        "tags": ["storage", "capacity", "1tb", "misleading", "binary"],
+        "priority": 7
+    },
+    {
+        "id": "qa-bluescreen-1",
+        "questions": [
+            "màn hình xanh lỗi gì?",
+            "máy bị crash hiện blue screen of death phải làm sao?",
+            "blue screen nguyên nhân nào?"
+        ],
+        "answer": "🔵 **Blue Screen of Death (BSOD) - Nguyên Nhân & Cách Sửa**\n\n**Blue Screen = Gì?**\nWindows crash tràn, không thể recover → show blue screen\nError code hiện lên (mã lỗi)\n\n**Nguyên Nhân Phổ Biến:**\n\n**1. Hardware Conflict (30%)**\n```\n- RAM lỏng/hỏng → mismatch address\n- GPU driver outdated\n- USB device conflict\n\nFix:\n- Reseat RAM (pull out, push in lại)\n- Update GPU driver\n- Disconnect USB devices\n```\n\n**2. Driver Issue (40%)**\n```\n- Chipset driver cũ\n- Audio driver crash\n- Network driver hung\n\nFix:\n- Update mainboard drivers (chipset)\n- Update GPU driver (NVIDIA/AMD)\n- Update all drivers: DriverEasy/Device Manager\n```\n\n**3. Overheating (15%)**\n```\n- CPU/GPU quá nóng (>90°C)\n- Thermal throttle → crash\n- Fan chết\n\nFix:\n- Clean dust (mờ từ tản nhiệt)\n- Check fan spin (listen)\n- Replace thermal paste\n- Lower overclocking (if OC)\n```\n\n**4. Power Issue (10%)**\n```\n- PSU không đủ watt\n- Power surge\n- Cáp lỏng\n\nFix:\n- Check PSU watt (enough?)\n- Reseat 24-pin + 8-pin CPU power\n- Surge protector\n```\n\n**5. Software Conflict (5%)**\n```\n- Windows update bad\n- Antivirus conflict\n- Malware\n\nFix:\n- Restore Windows\n- Disable antivirus temporarily\n- Scan malware (Malwarebytes)\n```\n\n**Error Code Phổ Biến:**\n```\n0x0000007E (SYSTEM_THREAD_EXCEPTION_NOT_HANDLED)\n  → Driver issue, update all drivers\n\n0x00000124 (WHEA_UNCORRECTABLE_ERROR)\n  → Hardware error, RAM/CPU problem\n\n0x0000001A (MEMORY_MANAGEMENT)\n  → RAM issue, reseat or replace\n\n0x0000008E (KERNEL_MODE_EXCEPTION_NOT_HANDLED)\n  → Driver/hardware conflict\n```\n\n**Cách Debug:**\n1. **Ghi lại error code** (photo BSOD)\n2. **Google error code** → find solution\n3. **Update drivers** (chipset, GPU, audio)\n4. **Check temps** (HWiNFO)\n5. **Reseat RAM/GPU** (disconnect power, wait 10s)\n6. **Memtest** (test RAM)\n7. **Clean install Windows** (last resort)\n\n**Prevention:**\n✅ Keep drivers updated (monthly)\n✅ Check temps (HWiNFO, stress test)\n✅ Don't overclock past stability (if beginner)\n✅ Adequate PSU (not chỉ định)\n✅ Use UPS (power stability)\n✅ Antivirus (Kaspersky/Windows Defender)\n\n**Nếu BSOD Liên Tục:**\n1. Boot Safe Mode (F8 bật machine)\n2. Uninstall recently added hardware\n3. Update all drivers from Device Manager\n4. Run sfc /scannow (repair Windows)\n5. If still BSOD → likely hardware (RAM/GPU)\n\n**Khi Gặp BSOD:**\n👉 Don't panic, 95% fixable\n👉 Note error code\n👉 Update drivers first (easiest fix)\n👉 Reseat RAM/GPU second\n👉 Last resort: Repair/Reinstall Windows\n\n**Bottom Line:** BSOD = Windows way nói \"có lỗi\", không phải máy hỏng!",
+        "intent": "support",
+        "agent": "support",
+        "tags": ["blue screen", "bsod", "crash", "troubleshooting"],
+        "priority": 8
+    }
+]

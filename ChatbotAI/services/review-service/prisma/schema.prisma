@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  productId String   @map("product_id")
+  userId    String   @map("user_id")
+  userName  String   @map("user_name")
+  rating    Int
+  title     String
+  content   String
+  pros      String[] @default([])
+  cons      String[] @default([])
+  verified  Boolean  @default(false)
+  status    String   @default("active") // active, hidden, reported
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([productId])
+  @@index([userId])
+  @@map("reviews")
+}

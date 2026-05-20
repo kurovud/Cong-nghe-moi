@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  STAFF
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BANNED
+}
+
+enum AccessLevel {
+  READ
+  WRITE
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String
+  name          String
+  phone         String?
+  avatar        String?
+  role          Role      @default(USER)
+  status        UserStatus @default(ACTIVE)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  addresses     Address[]
+  refreshTokens RefreshToken[]
+  
+  // UC16: Phân quyền - Relations cho Staff
+  staffPermissions      StaffPermission[] @relation("StaffPermissions")
+  staffCustomerAccess   StaffCustomerAccess[] @relation("StaffFor")
+  customerAccess        StaffCustomerAccess[] @relation("CustomerFor")
+  accessLogsAsStaff     CustomerAccessLog[] @relation("StaffAccessLog")
+  accessLogsAsGranter   StaffCustomerAccess[] @relation("GrantedByUser")
+
+  @@map("users")
+}
+
+model Address {
+  id        String  @id @default(uuid())
+  userId    String  @map("user_id")
+  fullName  String  @map("full_name")
+  phone     String
+  province  String
+  district  String
+  ward      String
+  street    String
+  isDefault Boolean @default(false) @map("is_default")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("addresses")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+// UC16: Phân quyền - Model quản lý quyền tính năng của từng STAFF
+model StaffPermission {
+  id        String   @id @default(uuid())
+  staffId   String
+  feature   String   // "products", "knowledge", "faq", "orders", "staff", etc.
+  canCreate Boolean  @default(false) @map("can_create")
+  canRead   Boolean  @default(true) @map("can_read")
+  canUpdate Boolean  @default(false) @map("can_update")
+  canDelete Boolean  @default(false) @map("can_delete")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  staff     User     @relation("StaffPermissions", fields: [staffId], references: [id], onDelete: Cascade)
+  
+  @@unique([staffId, feature])
+  @@index([staffId])
+  @@map("staff_permissions")
+}
+
+// UC16: Phân quyền - Model quản lý quyền truy cập khách hàng cho STAFF
+model StaffCustomerAccess {
+  id          String   @id @default(uuid())
+  staffId     String
+  customerId  String
+  accessLevel AccessLevel @default(READ) @map("access_level")
+  isActive    Boolean  @default(true) @map("is_active")
+  grantedBy   String
+  grantedAt   DateTime @default(now()) @map("granted_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  staff       User     @relation("StaffFor", fields: [staffId], references: [id], onDelete: Cascade)
+  customer    User     @relation("CustomerFor", fields: [customerId], references: [id], onDelete: Cascade)
+  grantedByUser User   @relation("GrantedByUser", fields: [grantedBy], references: [id])
+  
+  @@unique([staffId, customerId])
+  @@index([staffId])
+  @@index([customerId])
+  @@map("staff_customer_access")
+}
+
+// UC16: Phân quyền - Model nhật ký kiểm toán truy cập
+model CustomerAccessLog {
+  id        String   @id @default(uuid())
+  staffId   String
+  customerId String
+  action    String   // "access", "update", "lock", "unlock"
+  details   String?
+  timestamp DateTime @default(now())
+
+  staff     User     @relation("StaffAccessLog", fields: [staffId], references: [id], onDelete: Cascade)
+  
+  @@index([staffId, timestamp])
+  @@index([customerId, timestamp])
+  @@map("customer_access_logs")
+}

@@ -1,0 +1,254 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import type { ServiceCatalogItem } from "@/lib/serviceCatalog";
+import { DEFAULT_SERVICES, loadServiceCatalog, saveServiceCatalog } from "@/lib/serviceCatalog";
+
+const CATEGORY_LABELS: Record<ServiceCatalogItem["category"], string> = {
+  assembly: "Lắp Ráp",
+  delivery: "Vận Chuyển",
+  support: "Hỗ Trợ",
+  consultation: "Tư Vấn",
+};
+
+const EMPTY_SERVICE: ServiceCatalogItem = {
+  id: "",
+  name: "",
+  category: "support",
+  price: 0,
+  description: "",
+  features: [],
+  icon: "🔧",
+  duration: "",
+  inStock: true,
+};
+
+export default function AdminServicesPage() {
+  const [services, setServices] = useState<ServiceCatalogItem[]>(DEFAULT_SERVICES);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<ServiceCatalogItem | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<ServiceCatalogItem | null>(null);
+  const [featureInput, setFeatureInput] = useState("");
+
+  useEffect(() => {
+    setServices(loadServiceCatalog());
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (!loading) saveServiceCatalog(services);
+  }, [services, loading]);
+
+  const stats = useMemo(() => ({
+    total: services.length,
+    assembly: services.filter((s) => s.category === "assembly").length,
+    delivery: services.filter((s) => s.category === "delivery").length,
+    support: services.filter((s) => s.category === "support").length,
+    consultation: services.filter((s) => s.category === "consultation").length,
+  }), [services]);
+
+  const openAdd = () => {
+    setEditing({ ...EMPTY_SERVICE, id: `service-${Date.now()}` });
+    setFeatureInput("");
+    setShowForm(true);
+  };
+
+  const openEdit = (service: ServiceCatalogItem) => {
+    setEditing({ ...service, features: [...service.features] });
+    setFeatureInput("");
+    setShowForm(true);
+  };
+
+  const closeForm = () => {
+    setShowForm(false);
+    setEditing(null);
+    setFeatureInput("");
+  };
+
+  const updateField = <K extends keyof ServiceCatalogItem>(field: K, value: ServiceCatalogItem[K]) => {
+    setEditing((current) => (current ? { ...current, [field]: value } : current));
+  };
+
+  const addFeature = () => {
+    const value = featureInput.trim();
+    if (!value || !editing) return;
+    setEditing({ ...editing, features: [...editing.features, value] });
+    setFeatureInput("");
+  };
+
+  const removeFeature = (index: number) => {
+    if (!editing) return;
+    setEditing({ ...editing, features: editing.features.filter((_, current) => current !== index) });
+  };
+
+  const handleSave = () => {
+    if (!editing || !editing.name.trim() || !editing.description.trim()) return;
+    const next = services.some((item) => item.id === editing.id)
+      ? services.map((item) => (item.id === editing.id ? editing : item))
+      : [editing, ...services];
+    setServices(next);
+    closeForm();
+  };
+
+  const handleDelete = () => {
+    if (!deleteTarget) return;
+    setServices(services.filter((item) => item.id !== deleteTarget.id));
+    setDeleteTarget(null);
+  };
+
+  return (
+    <div className="admin-service-page">
+      <div className="admin-page-header">
+        <div>
+          <h1>🛠️ Quản lý Dịch vụ</h1>
+          <p>Thêm, sửa, xóa các gói dịch vụ và đồng bộ ngay với trang dịch vụ công khai.</p>
+        </div>
+        <button className="btn btn--primary" onClick={openAdd}>➕ Thêm dịch vụ</button>
+      </div>
+
+      <div className="stat-grid" style={{ marginBottom: "1rem" }}>
+        <div className="stat-card"><span className="stat-card__icon">🧾</span><span className="stat-card__value">{stats.total}</span><span className="stat-card__label">Tổng dịch vụ</span></div>
+        <div className="stat-card"><span className="stat-card__icon">🔧</span><span className="stat-card__value">{stats.assembly}</span><span className="stat-card__label">Lắp ráp</span></div>
+        <div className="stat-card"><span className="stat-card__icon">🚚</span><span className="stat-card__value">{stats.delivery}</span><span className="stat-card__label">Vận chuyển</span></div>
+        <div className="stat-card"><span className="stat-card__icon">🛡️</span><span className="stat-card__value">{stats.support}</span><span className="stat-card__label">Hỗ trợ / tư vấn</span></div>
+      </div>
+
+      {loading ? (
+        <div className="loading-center"><div className="spinner" /></div>
+      ) : (
+        <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
+          {services.map((service) => (
+            <div key={service.id} className="card" style={{ padding: "1.25rem", display: "grid", gap: "0.9rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: "0.75rem", alignItems: "start" }}>
+                <div>
+                  <div style={{ fontSize: "2rem", marginBottom: "0.4rem" }}>{service.icon}</div>
+                  <h3 style={{ margin: 0 }}>{service.name}</h3>
+                  <div style={{ marginTop: "0.4rem" }} className="badge badge--purple">{CATEGORY_LABELS[service.category]}</div>
+                </div>
+                <div style={{ display: "flex", gap: "0.35rem" }}>
+                  <button className="btn btn--sm" onClick={() => openEdit(service)}>✏️</button>
+                  <button className="btn btn--sm btn--danger" onClick={() => setDeleteTarget(service)}>🗑️</button>
+                </div>
+              </div>
+
+              <p style={{ color: "var(--muted)", margin: 0 }}>{service.description}</p>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                {service.features.slice(0, 4).map((feature) => (
+                  <span key={feature} className="badge badge--blue">{feature}</span>
+                ))}
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <strong style={{ color: "var(--primary)" }}>{service.price === 0 ? "Miễn phí" : new Intl.NumberFormat("vi-VN").format(service.price) + "₫"}</strong>
+                <span className="badge">{service.duration || "Không giới hạn"}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {showForm && editing && (
+        <div className="modal-overlay" onClick={closeForm}>
+          <div className="modal modal--lg" onClick={(event) => event.stopPropagation()}>
+            <div className="modal__header">
+              <h2>{editing.id && services.some((item) => item.id === editing.id) ? "✏️ Sửa dịch vụ" : "➕ Thêm dịch vụ"}</h2>
+              <button className="modal__close" onClick={closeForm}>×</button>
+            </div>
+            <div className="modal__body">
+                <button type="button" className="btn btn--primary" onClick={openAdd}>➕ Thêm dịch vụ</button>
+                <div className="form-group">
+                  <label>Tên dịch vụ *</label>
+                  <input value={editing.name} onChange={(event) => updateField("name", event.target.value)} placeholder="VD: Lắp Ráp PC Cao Cấp" />
+                          <button type="button" className="btn btn--sm" onClick={() => openEdit(service)}>✏️</button>
+                          <button type="button" className="btn btn--sm btn--danger" onClick={() => setDeleteTarget(service)}>🗑️</button>
+                  <label>Danh mục</label>
+                  <select value={editing.category} onChange={(event) => updateField("category", event.target.value as ServiceCatalogItem["category"]) }>
+                    <option value="assembly">Lắp Ráp</option>
+                        <button type="button" className="btn" onClick={addFeature}>+ Thêm</button>
+                    <option value="support">Hỗ Trợ</option>
+                    <option value="consultation">Tư Vấn</option>
+                  </select>
+                </div>
+                      <button type="button" className="modal__close" onClick={closeForm}>×</button>
+
+              <div className="form-row">
+                      <button type="button" className="btn" onClick={closeForm}>Hủy</button>
+                      <button type="button" className="btn btn--primary" onClick={handleSave}>Lưu dịch vụ</button>
+                  <input type="number" value={editing.price} onChange={(event) => updateField("price", Number(event.target.value))} />
+                </div>
+                <div className="form-group">
+                      <button type="button" className="btn" onClick={() => setDeleteTarget(null)}>Huỷ</button>
+                      <button type="button" className="btn btn--danger" onClick={handleDelete}>Xoá</button>
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Thời gian</label>
+                  <input value={editing.duration || ""} onChange={(event) => updateField("duration", event.target.value)} placeholder="VD: 2-3 giờ" />
+                </div>
+                <div className="form-group">
+                  <label>Trạng thái bán</label>
+                  <select value={editing.inStock ? "true" : "false"} onChange={(event) => updateField("inStock", event.target.value === "true") }>
+                    <option value="true">Còn nhận</option>
+                    <option value="false">Tạm ngưng</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Mô tả *</label>
+                <textarea value={editing.description} onChange={(event) => updateField("description", event.target.value)} rows={3} />
+              </div>
+
+              <div className="form-group">
+                <label>Tính năng</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                  {editing.features.map((feature, index) => (
+                    <button key={`${feature}-${index}`} type="button" className="badge badge--blue" onClick={() => removeFeature(index)}>
+                      {feature} ✕
+                    </button>
+                  ))}
+                </div>
+                <div style={{ display: "flex", gap: "0.6rem" }}>
+                  <input value={featureInput} onChange={(event) => setFeatureInput(event.target.value)} placeholder="Thêm tính năng mới" />
+                  <button type="button" className="btn" onClick={addFeature}>+ Thêm</button>
+                </div>
+              </div>
+            </div>
+            <div className="modal__footer">
+              <button className="btn" onClick={closeForm}>Hủy</button>
+              <button className="btn btn--primary" onClick={handleSave}>Lưu dịch vụ</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {deleteTarget && (
+        <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
+          <div className="modal" style={{ maxWidth: 420 }} onClick={(event) => event.stopPropagation()}>
+            <div className="modal__body">
+              <div className="confirm-dialog">
+                <div className="confirm-dialog__icon">🗑️</div>
+                <h3>Xoá dịch vụ?</h3>
+                <p>Bạn có chắc muốn xoá <strong>{deleteTarget.name}</strong>? Hành động này áp dụng ngay cho trang dịch vụ công khai.</p>
+              </div>
+            </div>
+            <div className="modal__footer">
+              <button className="btn" onClick={() => setDeleteTarget(null)}>Huỷ</button>
+              <button className="btn btn--danger" onClick={handleDelete}>Xoá</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="card" style={{ marginTop: "1rem" }}>
+        <p style={{ margin: 0, color: "var(--muted)" }}>
+          Dữ liệu được lưu trong trình duyệt để trang <strong>/services</strong> hiển thị đúng danh sách sau khi thay đổi.
+        </p>
+      </div>
+    </div>
+  );
+}

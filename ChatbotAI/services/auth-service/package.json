@@ -1,0 +1,33 @@
+{
+    "name": "@chatbot/auth-service",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "tsx watch src/main.ts",
+        "build": "tsc",
+        "start": "node dist/main.js",
+        "prisma:generate": "prisma generate",
+        "prisma:migrate": "prisma migrate dev",
+        "prisma:push": "prisma db push",
+        "seed": "tsx src/seed.ts"
+    },
+    "dependencies": {
+        "@chatbot/common": "file:../../common",
+        "@prisma/client": "^5.15.0",
+        "bcryptjs": "^3.0.3",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "helmet": "^7.1.0",
+        "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.17",
+        "@types/express": "^4.17.21",
+        "@types/morgan": "^1.9.9",
+        "@types/node": "^20.14.2",
+        "prisma": "^5.15.0",
+        "tsx": "^4.15.1",
+        "typescript": "^5.4.5"
+    }
+}

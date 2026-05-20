@@ -1,0 +1,1 @@
+export { updateProductSchema } from "@chatbot/common";

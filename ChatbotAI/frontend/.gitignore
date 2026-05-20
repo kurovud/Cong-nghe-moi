@@ -1,0 +1,27 @@
+# Frontend-specific ignores
+
+# Build output
+.next/
+out/
+/build/
+
+# Node
+node_modules/
+
+# Runtime data
+services-data/
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+
+# OS / editors
+.DS_Store
+.vscode/
+
+# Local caches
+.cache/
+
