@@ -162,50 +162,6 @@ export default function LoginPage() {
           <Link href="/register">Đăng ký ngay →</Link>
         </div>
 
-        {/* Demo accounts section */}
-        <div className="auth-demo">
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            marginBottom: '0.6rem',
-            color: 'var(--cyan)',
-            fontWeight: 700,
-            fontSize: '0.8rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.06em',
-          }}>
-            🧪 Tài khoản Demo
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <div style={{
-              background: 'rgba(0,212,255,0.06)',
-              border: '1px solid rgba(0,212,255,0.15)',
-              borderRadius: 'var(--r-sm)',
-              padding: '0.5rem 0.75rem',
-            }}>
-              <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: '0.78rem', marginBottom: '2px' }}>
-                👤 Customer
-              </div>
-              <div style={{ color: 'var(--text-2)', fontSize: '0.75rem' }}>
-                demo@pcbuildershop.vn / <span style={{ color: 'var(--cyan)' }}>demo123</span>
-              </div>
-            </div>
-            <div style={{
-              background: 'rgba(168,85,247,0.06)',
-              border: '1px solid rgba(168,85,247,0.15)',
-              borderRadius: 'var(--r-sm)',
-              padding: '0.5rem 0.75rem',
-            }}>
-              <div style={{ fontWeight: 700, color: 'var(--text)', fontSize: '0.78rem', marginBottom: '2px' }}>
-                👑 Admin
-              </div>
-              <div style={{ color: 'var(--text-2)', fontSize: '0.75rem' }}>
-                admin@pcbuildershop.vn / <span style={{ color: 'var(--purple)' }}>admin123</span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -204,19 +204,17 @@ const Header = () => {
       }} className="promo-strip">
         <div style={{ overflow: 'hidden', width: '100%' }}>
           <div className="promo-ticker">
-            {[...Array(3)].map((_, i) => (
-              <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '3rem', fontSize: '0.78rem', fontWeight: 500, color: 'var(--text-2)' }}>
-                <span>🚚 <strong style={{ color: 'var(--cyan)' }}>MIỄN PHÍ VẬN CHUYỂN</strong> đơn từ 5 triệu</span>
-                <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
-                <span>⚡ Deal hôm nay kết thúc lúc <strong style={{ color: 'var(--orange)', fontVariantNumeric: 'tabular-nums' }}>
-                  {pad(countdown.h)}:{pad(countdown.m)}:{pad(countdown.s)}
-                </strong></span>
-                <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
-                <span>🎁 Bảo hành chính hãng 12–36 tháng</span>
-                <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
-                <span>💬 Tư vấn AI 24/7 <Link href="/chat" style={{ color: 'var(--cyan)', fontWeight: 700 }}>Dùng ngay →</Link></span>
-              </span>
-            ))}
+            <span style={{ display: 'flex', alignItems: 'center', gap: '3rem', fontSize: '0.78rem', fontWeight: 500, color: 'var(--text-2)' }}>
+              <span>🚚 <strong style={{ color: 'var(--cyan)' }}>MIỄN PHÍ VẬN CHUYỂN</strong> đơn từ 5 triệu</span>
+              <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
+              <span>⚡ Deal hôm nay kết thúc lúc <strong style={{ color: 'var(--orange)', fontVariantNumeric: 'tabular-nums' }}>
+                {pad(countdown.h)}:{pad(countdown.m)}:{pad(countdown.s)}
+              </strong></span>
+              <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
+              <span>🎁 Bảo hành chính hãng 12–36 tháng</span>
+              <span style={{ color: 'rgba(255,255,255,0.15)' }}>|</span>
+              <span>💬 Tư vấn AI 24/7 <Link href="/chat" style={{ color: 'var(--cyan)', fontWeight: 700 }}>Dùng ngay →</Link></span>
+            </span>
           </div>
         </div>
       </div>

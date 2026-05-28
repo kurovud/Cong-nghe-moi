@@ -32,6 +32,8 @@ export const POST = async (request: Request, context: { params: { id: string } }
       senderRole: body.senderRole,
       senderName: body.senderName,
       content: body.content,
+      messageType: body.messageType,
+      imageUrl: body.imageUrl,
     });
 
     return NextResponse.json(result, { status: 201 });

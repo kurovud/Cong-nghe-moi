@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import {
+  deleteLiveChatSession,
   closeLiveChatSession,
   getLiveChatSessionSummary,
   reopenLiveChatSession,
@@ -42,5 +43,14 @@ export const PATCH = async (request: Request, context: { params: { id: string } 
     return NextResponse.json({ error: "Invalid action" }, { status: 400 });
   } catch (error: any) {
     return NextResponse.json({ error: error?.message || "Server error" }, { status: 500 });
+  }
+};
+
+export const DELETE = async (_request: Request, context: { params: { id: string } }) => {
+  try {
+    const { id } = context.params;
+    return NextResponse.json({ session: deleteLiveChatSession(id) });
+  } catch (error: any) {
+    return NextResponse.json({ error: error?.message || "Server error" }, { status: 404 });
   }
 };

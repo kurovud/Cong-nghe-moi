@@ -26,6 +26,12 @@ const makeId = (prefix: string) =>
 
 const normalizeText = (value: string) => value.trim().replace(/\s+/g, " ");
 
+const getMessagePreview = (message?: Pick<LiveChatMessage, "content" | "messageType">) => {
+  if (!message) return undefined;
+  if (message.messageType === "image") return "[Hình ảnh]";
+  return message.content;
+};
+
 const toSummary = (session: LiveChatSession): LiveChatSessionSummary => {
   const latest = session.messages[0];
   return {
@@ -42,7 +48,7 @@ const toSummary = (session: LiveChatSession): LiveChatSessionSummary => {
     unreadForAdmin: session.unreadForAdmin,
     unreadForCustomer: session.unreadForCustomer,
     messageCount: session.messages.length,
-    latestMessage: latest?.content,
+    latestMessage: getMessagePreview(latest),
     latestSenderRole: latest?.senderRole,
   };
 };
@@ -61,7 +67,14 @@ const appendMessage = (
 ): LiveChatMessage => {
   const now = new Date().toISOString();
   const content = normalizeText(payload.content);
-  if (!content) {
+  const messageType = payload.messageType === "image" ? "image" : "text";
+  const imageUrl = typeof payload.imageUrl === "string" ? payload.imageUrl.trim() : "";
+
+  if (messageType === "image" && !imageUrl) {
+    throw new Error("Ảnh không hợp lệ");
+  }
+
+  if (messageType === "text" && !content) {
     throw new Error("Nội dung tin nhắn không được để trống");
   }
 
@@ -71,10 +84,16 @@ const appendMessage = (
     senderRole: payload.senderRole,
     senderName: normalizeText(payload.senderName || "Khách hàng"),
     content,
+    messageType,
+    imageUrl: messageType === "image" ? imageUrl : undefined,
     timestamp: now,
     readByCustomer: payload.senderRole === "customer",
     readByAdmin: payload.senderRole === "admin",
   };
+
+  const messagePreview = messageType === "image"
+    ? "[Hình ảnh]"
+    : `${content.slice(0, 80)}${content.length > 80 ? "…" : ""}`;
 
   session.messages.unshift(message);
   session.updatedAt = now;
@@ -87,7 +106,7 @@ const appendMessage = (
     addNotification("admin", {
       type: "system",
       title: "Có tin nhắn hỗ trợ mới",
-      message: `${session.userName}: ${content.slice(0, 80)}${content.length > 80 ? "…" : ""}`,
+      message: `${session.userName}: ${messagePreview}`,
       link: "/admin/live-chats",
     });
   } else if (payload.senderRole === "admin") {
@@ -98,7 +117,7 @@ const appendMessage = (
       addNotification(session.userId, {
         type: "system",
         title: "Nhân viên đã phản hồi",
-        message: content.slice(0, 80) + (content.length > 80 ? "…" : ""),
+        message: messagePreview,
         link: "/",
       });
     }
@@ -203,6 +222,17 @@ export const closeLiveChatSession = (sessionId: string) => {
   session.status = "closed";
   session.updatedAt = new Date().toISOString();
   return toSummary(session);
+};
+
+export const deleteLiveChatSession = (sessionId: string) => {
+  const store = getStore();
+  const index = store.sessions.findIndex((session) => session.id === sessionId);
+  if (index === -1) {
+    throw new Error("Không tìm thấy phiên chat");
+  }
+
+  const [removed] = store.sessions.splice(index, 1);
+  return toSummary(removed);
 };
 
 export const reopenLiveChatSession = (sessionId: string) => {

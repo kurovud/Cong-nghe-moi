@@ -55,7 +55,7 @@ export async function confirmPayment(req: AuthRequest, res: Response, next: Next
 
     const userId = req.user?.userId;
     if (!userId) {
-      throw new AppError("Không có quyền truy cập", HttpStatus.UNAUTHORIZED, ErrorCode.AUTH_UNAUTHENTICATED);
+      throw new AppError("Không có quyền truy cập", HttpStatus.UNAUTHORIZED, ErrorCode.AUTH_TOKEN_MISSING);
     }
 
     const order = await orderService.getOrderById(orderId, userId);

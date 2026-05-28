@@ -8,6 +8,8 @@ export interface LiveChatMessage {
   senderRole: LiveChatRole;
   senderName: string;
   content: string;
+  messageType?: "text" | "image";
+  imageUrl?: string;
   timestamp: string;
   readByCustomer: boolean;
   readByAdmin: boolean;
@@ -60,6 +62,8 @@ export interface SendLiveChatMessageRequest {
   senderRole: LiveChatRole;
   senderName: string;
   content: string;
+  messageType?: "text" | "image";
+  imageUrl?: string;
 }
 
 export interface LiveChatMessagesResponse {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import AdminHeader from "@/components/AdminHeader";
 import { useAuth } from "@/components/providers/AuthProvider";
 import {
@@ -9,6 +9,8 @@ import {
   fetchLiveChatSessions,
   sendLiveChatMessage,
 } from "@/services/live-chat.api";
+import { subscribeLiveChatSync } from "@/lib/liveChatSync";
+import { emitLiveChatSync } from "@/lib/liveChatSync";
 import type { LiveChatMessage, LiveChatSessionSummary } from "@/types/live-chat.type";
 
 const formatTime = (value: string) =>
@@ -27,11 +29,16 @@ const AdminLiveChatsPage = () => {
   const [loading, setLoading] = useState(true);
   const [messageLoading, setMessageLoading] = useState(false);
   const [reply, setReply] = useState("");
+  const selectedSessionIdRef = useRef<string | null>(null);
 
   const selectedSession = useMemo(
     () => sessions.find((session) => session.id === selectedSessionId) || null,
     [sessions, selectedSessionId]
   );
+
+  useEffect(() => {
+    selectedSessionIdRef.current = selectedSessionId;
+  }, [selectedSessionId]);
 
   const refreshSessions = async (keepSelection = true) => {
     const data = await fetchLiveChatSessions({});
@@ -115,6 +122,30 @@ const AdminLiveChatsPage = () => {
   }, [selectedSessionId]);
 
   useEffect(() => {
+    const unsubscribe = subscribeLiveChatSync((event) => {
+      if (loading) return;
+      if (!event.sessionId) {
+        void refreshSessions(true);
+        return;
+      }
+
+      const currentSelected = selectedSessionIdRef.current;
+      if (!currentSelected || currentSelected === event.sessionId) {
+        void refreshSessions(true).then(() => {
+          if (currentSelected || event.sessionId) {
+            void refreshMessages(event.sessionId);
+          }
+        });
+        return;
+      }
+
+      void refreshSessions(true);
+    });
+
+    return unsubscribe;
+  }, [loading]);
+
+  useEffect(() => {
     if (selectedSessionId) {
       void refreshMessages(selectedSessionId);
     } else {
@@ -134,6 +165,7 @@ const AdminLiveChatsPage = () => {
     });
     setMessages(result.messages);
     setSessions((prev) => prev.map((session) => (session.id === selectedSessionId ? result.session : session)));
+    emitLiveChatSync({ sessionId: selectedSessionId, source: "admin" });
   };
 
   const handleCloseSession = async () => {
@@ -141,6 +173,7 @@ const AdminLiveChatsPage = () => {
     await updateLiveChatSession(selectedSessionId, { action: "close" });
     await refreshSessions();
     await refreshMessages(selectedSessionId);
+    emitLiveChatSync({ sessionId: selectedSessionId, source: "admin" });
   };
 
   const stats = [

@@ -1,35 +1,78 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
 import {
   createLiveChatSession,
   fetchLiveChatMessages,
   sendLiveChatMessage,
 } from "@/services/live-chat.api";
+import { emitLiveChatSync, subscribeLiveChatSync } from "@/lib/liveChatSync";
 import type { LiveChatMessage, LiveChatSessionSummary } from "@/types/live-chat.type";
 
-const STORAGE_KEY = "pc-builder-live-chat-session";
+const getStorageKey = (userId?: string | null, role?: string | null) =>
+  `pc-builder-live-chat-session:${role || "guest"}:${userId || "guest"}`;
+
+const isMissingSessionError = (error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error || "");
+  return message.includes("Không tìm thấy phiên chat") || message.includes("HTTP 404");
+};
+
+const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
+
+const toDataUrl = (file: File) =>
+  new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("Không thể đọc ảnh đã chọn"));
+    reader.readAsDataURL(file);
+  });
 
 const LiveSupportChat = () => {
   const { user } = useAuth();
+  const router = useRouter();
   const [session, setSession] = useState<LiveChatSessionSummary | null>(null);
   const [messages, setMessages] = useState<LiveChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [booting, setBooting] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const sessionIdRef = useRef<string | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [pendingImage, setPendingImage] = useState<string | null>(null);
+  const storageKey = useMemo(
+    () => getStorageKey(user?.id, user?.role),
+    [user?.id, user?.role]
+  );
+
+  const isCustomer = !user || user.role === "customer";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const hydrateSession = async (sessionId: string) => {
-    const data = await fetchLiveChatMessages(sessionId, "customer");
-    setSession(data.session);
-    setMessages(data.messages);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY, sessionId);
+    try {
+      const data = await fetchLiveChatMessages(sessionId, "customer");
+      setSession(data.session);
+      setMessages(data.messages);
+      sessionIdRef.current = sessionId;
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(storageKey, sessionId);
+      }
+    } catch (error) {
+      if (isMissingSessionError(error)) {
+        if (typeof window !== "undefined") {
+          window.localStorage.removeItem(storageKey);
+        }
+        sessionIdRef.current = null;
+        setSession(null);
+        setMessages([]);
+        return;
+      }
+
+      throw error;
     }
   };
 
@@ -38,25 +81,33 @@ const LiveSupportChat = () => {
   }, [messages, loading]);
 
   useEffect(() => {
+    if (!isCustomer) {
+      setSession(null);
+      setMessages([]);
+      setBooting(false);
+      sessionIdRef.current = null;
+      return;
+    }
+
     let mounted = true;
+    setBooting(true);
 
     const restore = async () => {
       try {
-        const storedSessionId = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
+        const storedSessionId = typeof window !== "undefined" ? window.localStorage.getItem(storageKey) : null;
         if (storedSessionId) {
           await hydrateSession(storedSessionId);
           if (mounted) setBooting(false);
           return;
         }
       } catch {
-        if (typeof window !== "undefined") {
-          window.localStorage.removeItem(STORAGE_KEY);
-        }
+        // Keep the stored session if this was a temporary network issue.
       }
 
       if (mounted) {
         setMessages([]);
         setBooting(false);
+        sessionIdRef.current = null;
       }
     };
 
@@ -65,10 +116,11 @@ const LiveSupportChat = () => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [isCustomer, storageKey]);
 
   useEffect(() => {
-    if (!session?.id) return;
+    if (!isCustomer || !session?.id) return;
+    sessionIdRef.current = session.id;
 
     let cancelled = false;
     let delay = 3000;
@@ -81,7 +133,16 @@ const LiveSupportChat = () => {
         setMessages(data.messages);
         // reset delay on success
         delay = 3000;
-      } catch {
+      } catch (error) {
+        if (isMissingSessionError(error)) {
+          if (typeof window !== "undefined" && sessionIdRef.current === session.id) {
+            window.localStorage.removeItem(storageKey);
+          }
+          setSession(null);
+          setMessages([]);
+          sessionIdRef.current = null;
+          return;
+        }
         // on failure, back off up to 15s
         delay = Math.min(15000, delay * 1.8);
       }
@@ -94,56 +155,194 @@ const LiveSupportChat = () => {
     return () => {
       cancelled = true;
     };
-  }, [session?.id]);
+  }, [isCustomer, session?.id]);
 
-  const sendMessage = async () => {
-    const content = input.trim();
-    if (!content || loading) return;
+  useEffect(() => {
+    if (!isCustomer) return undefined;
+
+    const unsubscribe = subscribeLiveChatSync((event) => {
+      const currentSessionId = sessionIdRef.current;
+      if (!event.sessionId) return;
+      if (!currentSessionId || currentSessionId === event.sessionId) {
+        void hydrateSession(event.sessionId);
+      }
+    });
+
+    return unsubscribe;
+  }, [isCustomer]);
+
+  if (!isCustomer) {
+    return (
+      <div className="live-chat-widget" style={{ justifyContent: "center" }}>
+        <div className="live-chat-widget__empty" style={{ padding: "1.5rem" }}>
+          <div className="live-chat-widget__empty-card">
+            <strong style={{ display: "block", color: "var(--text)", marginBottom: "0.35rem" }}>
+              Live chat dành cho khách hàng
+            </strong>
+            <p style={{ margin: 0, lineHeight: 1.6 }}>
+              Tài khoản nhân viên sẽ dùng khu vực quản trị riêng để phản hồi khách hàng, không dùng khung chat của khách.
+            </p>
+            <button
+              type="button"
+              onClick={() => router.push("/admin/live-chats")}
+              style={{
+                marginTop: "1rem",
+                padding: "0.8rem 1rem",
+                borderRadius: 14,
+                border: "none",
+                background: "var(--grad-brand)",
+                color: "#050d1a",
+                fontWeight: 800,
+                cursor: "pointer",
+              }}
+            >
+              Mở trang live chat nhân viên
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const pushSystemMessage = (text: string) => {
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `error-${Date.now()}`,
+        sessionId: session?.id || "pending",
+        senderRole: "system",
+        senderName: "Hệ thống",
+        content: text,
+        messageType: "text",
+        timestamp: new Date().toISOString(),
+        readByCustomer: true,
+        readByAdmin: true,
+      },
+    ]);
+  };
+
+  const sendPayload = async (payload: {
+    content?: string;
+    messageType?: "text" | "image";
+    imageUrl?: string;
+  }) => {
+    if (loading) return;
+    const content = (payload.content || "").trim();
+    const messageType = payload.messageType === "image" ? "image" : "text";
+    if (messageType === "text" && !content) return;
 
     setLoading(true);
-    setInput("");
+    if (messageType === "text") {
+      setInput("");
+    }
 
     try {
-      if (!session?.id) {
+      let activeSessionId = session?.id || null;
+
+      if (!activeSessionId) {
+        if (messageType === "text") {
+          const created = await createLiveChatSession({
+            userId: user?.id || "guest",
+            userName: user?.name || "Khách hàng",
+            userEmail: user?.email,
+            subject: "Hỗ trợ trực tiếp",
+            source: "floating-widget",
+            initialMessage: content,
+          });
+          setSession(created.session);
+          setMessages(created.messages);
+          sessionIdRef.current = created.session.id;
+          if (typeof window !== "undefined") {
+            window.localStorage.setItem(storageKey, created.session.id);
+          }
+          emitLiveChatSync({ sessionId: created.session.id, source: "customer" });
+          return;
+        }
+
         const created = await createLiveChatSession({
           userId: user?.id || "guest",
           userName: user?.name || "Khách hàng",
           userEmail: user?.email,
           subject: "Hỗ trợ trực tiếp",
           source: "floating-widget",
-          initialMessage: content,
         });
         setSession(created.session);
         setMessages(created.messages);
+        sessionIdRef.current = created.session.id;
+        activeSessionId = created.session.id;
         if (typeof window !== "undefined") {
-          window.localStorage.setItem(STORAGE_KEY, created.session.id);
+          window.localStorage.setItem(storageKey, created.session.id);
         }
-        return;
       }
 
-      const result = await sendLiveChatMessage(session.id, {
+      const result = await sendLiveChatMessage(activeSessionId, {
         senderRole: "customer",
         senderName: user?.name || "Khách hàng",
         content,
+        messageType,
+        imageUrl: payload.imageUrl || (pendingImage && messageType === "image" ? pendingImage : undefined),
       });
       setSession(result.session);
       setMessages(result.messages);
+      sessionIdRef.current = result.session.id;
+      emitLiveChatSync({ sessionId: result.session.id, source: "customer" });
+      // clear pending image after successful send
+      setPendingImage(null);
     } catch (error: any) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `error-${Date.now()}`,
-          sessionId: session?.id || "pending",
-          senderRole: "system",
-          senderName: "Hệ thống",
-          content: error?.message || "Không thể gửi tin nhắn lúc này.",
-          timestamp: new Date().toISOString(),
-          readByCustomer: true,
-          readByAdmin: true,
-        },
-      ]);
+      pushSystemMessage(error?.message || "Không thể gửi tin nhắn lúc này.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const sendMessage = async () => {
+    await sendPayload({ content: input, messageType: "text" });
+  };
+
+  const handleSelectImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      pushSystemMessage("Vui lòng chọn file ảnh hợp lệ.");
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      pushSystemMessage("Ảnh tối đa 2MB để gửi nhanh hơn.");
+      return;
+    }
+
+    try {
+      const imageUrl = await toDataUrl(file);
+      setPendingImage(imageUrl);
+    } catch (error: any) {
+      pushSystemMessage(error?.message || "Không thể gửi ảnh lúc này.");
+    }
+  };
+
+  const handlePaste = async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    try {
+      const items = event.clipboardData?.items;
+      if (!items) return;
+      for (let i = 0; i < items.length; i += 1) {
+        const item = items[i];
+        if (item.kind === "file" && item.type.startsWith("image/")) {
+          const file = item.getAsFile();
+          if (file) {
+            if (file.size > MAX_IMAGE_SIZE) {
+              pushSystemMessage("Ảnh tối đa 2MB để gửi nhanh hơn.");
+              return;
+            }
+            const data = await toDataUrl(file);
+            setPendingImage(data);
+            return;
+          }
+        }
+      }
+    } catch (err) {
+      // ignore paste errors
     }
   };
 
@@ -289,6 +488,16 @@ const LiveSupportChat = () => {
           color: var(--text-3);
           margin-top: 0.45rem;
         }
+        .live-chat-widget__image {
+          display: block;
+          max-width: 220px;
+          max-height: 220px;
+          width: auto;
+          height: auto;
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.18);
+          object-fit: cover;
+        }
         .live-chat-widget__composer {
           border-top: 1px solid var(--border);
           padding: 0.9rem;
@@ -333,6 +542,16 @@ const LiveSupportChat = () => {
         .live-chat-widget__send:disabled {
           opacity: 0.55;
           cursor: not-allowed;
+        }
+        .live-chat-widget__attach {
+          min-width: 52px;
+          height: 52px;
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          background: rgba(255,255,255,0.05);
+          color: var(--text);
+          font-size: 1.1rem;
+          cursor: pointer;
         }
         .live-chat-widget__note {
           font-size: 0.72rem;
@@ -379,7 +598,13 @@ const LiveSupportChat = () => {
 
             return (
               <div key={message.id} className={bubbleClass}>
-                <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.6 }}>{message.content}</div>
+                {message.messageType === "image" && message.imageUrl ? (
+                  <a href={message.imageUrl} target="_blank" rel="noreferrer">
+                    <img className="live-chat-widget__image" src={message.imageUrl} alt="Ảnh đã gửi" />
+                  </a>
+                ) : (
+                  <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.6 }}>{message.content}</div>
+                )}
                 <div className="live-chat-widget__bubble-meta">
                   <span>{message.senderName}</span>
                   <span>{new Date(message.timestamp).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}</span>
@@ -398,12 +623,20 @@ const LiveSupportChat = () => {
 
       <div className="live-chat-widget__composer">
         <div className="live-chat-widget__input-row">
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={(event) => void handleSelectImage(event)}
+          />
           <textarea
             className="live-chat-widget__input"
             value={input}
             onChange={(event) => setInput(event.target.value)}
             placeholder="Nhập câu hỏi hoặc mô tả vấn đề của bạn..."
             rows={2}
+            onPaste={handlePaste}
             onKeyDown={(event) => {
               if (event.key === "Enter" && !event.shiftKey) {
                 event.preventDefault();
@@ -411,12 +644,31 @@ const LiveSupportChat = () => {
               }
             }}
           />
-          <button className="live-chat-widget__send" type="button" onClick={() => void sendMessage()} disabled={loading || !input.trim()}>
+          <button
+            className="live-chat-widget__attach"
+            type="button"
+            onClick={() => imageInputRef.current?.click()}
+            disabled={loading}
+            aria-label="Gửi ảnh"
+            title="Gửi ảnh"
+          >
+            🖼️
+          </button>
+          <button className="live-chat-widget__send" type="button" onClick={() => void sendMessage()} disabled={loading || (!input.trim() && !pendingImage)}>
             Gửi
           </button>
         </div>
+        {pendingImage ? (
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 0' }}>
+            <img src={pendingImage} alt="Preview" style={{ maxWidth: 160, maxHeight: 120, borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)' }} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <button type="button" onClick={() => setPendingImage(null)} style={{ padding: '0.35rem 0.6rem', borderRadius: 10, border: 'none', background: 'rgba(255,255,255,0.04)', cursor: 'pointer' }}>Xóa ảnh</button>
+              <div style={{ color: 'var(--text-3)', fontSize: '0.85rem' }}>Ảnh sẽ được gửi cùng nội dung tin nhắn.</div>
+            </div>
+          </div>
+        ) : null}
         <div className="live-chat-widget__note">
-          Live chat đang dùng cơ chế polling trong Next app để đồng bộ khách hàng và admin khi chưa có websocket backend riêng.
+          Live chat của khách hàng được giữ riêng theo từng tài khoản; nhân viên phản hồi ở màn quản trị riêng.
         </div>
       </div>
     </div>

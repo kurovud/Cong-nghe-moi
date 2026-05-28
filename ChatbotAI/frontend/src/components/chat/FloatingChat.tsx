@@ -1,18 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ChatWindow from "./ChatWindow";
 import LiveSupportChat from "./LiveSupportChat";
+import StaffLiveChatPanel from "./StaffLiveChatPanel";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 const FloatingChat = () => {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<"ai" | "support">("ai");
   const pathname = usePathname();
+  const isSupportCustomer = !user || user.role === "customer";
+  const isStaffOrAdmin = !!user && user.role !== "customer";
+  const isStaffSupportMode = isOpen && mode === "support" && isStaffOrAdmin;
 
-  if (pathname.startsWith("/admin")) {
-    return null;
-  }
+  useEffect(() => {
+    if (isStaffOrAdmin) {
+      setMode("support");
+    }
+  }, [isStaffOrAdmin]);
 
   return (
     <>
@@ -45,7 +53,9 @@ const FloatingChat = () => {
           right: 22,
           bottom: 92,
           zIndex: 60,
-          width: "min(420px, calc(100vw - 1.5rem))",
+          width: isStaffSupportMode
+            ? "min(860px, calc(100vw - 1.5rem))"
+            : "min(420px, calc(100vw - 1.5rem))",
           height: "min(760px, calc(100vh - 120px))",
           display: "flex",
           flexDirection: "column",
@@ -63,7 +73,11 @@ const FloatingChat = () => {
           }}>
             {[
               { key: "ai", label: "AI tư vấn", icon: "🤖" },
-              { key: "support", label: "Hỗ trợ trực tiếp", icon: "🧑‍🔧" },
+              {
+                key: "support",
+                label: isStaffOrAdmin ? "Live chat khách hàng" : "Hỗ trợ trực tiếp",
+                icon: isStaffOrAdmin ? "💬" : "🧑‍🔧",
+              },
             ].map((item) => {
               const active = mode === item.key;
               return (
@@ -93,7 +107,13 @@ const FloatingChat = () => {
             })}
           </div>
           <div style={{ flex: 1, minHeight: 0 }}>
-            {mode === "ai" ? <ChatWindow /> : <LiveSupportChat />}
+            {mode === "ai" ? (
+              <ChatWindow />
+            ) : isSupportCustomer ? (
+              <LiveSupportChat />
+            ) : (
+              <StaffLiveChatPanel />
+            )}
           </div>
         </div>
       )}

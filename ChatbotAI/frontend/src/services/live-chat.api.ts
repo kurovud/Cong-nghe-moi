@@ -78,3 +78,10 @@ export const updateLiveChatSession = async (
   });
   return parseJson<LiveChatMessagesResponse["session"]>(response);
 };
+
+export const deleteLiveChatSession = async (sessionId: string): Promise<LiveChatMessagesResponse["session"]> => {
+  const response = await fetch(`${API_BASE}/sessions/${sessionId}`, {
+    method: "DELETE",
+  });
+  return parseJson<LiveChatMessagesResponse["session"]>(response);
+};

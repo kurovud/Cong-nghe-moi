@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import AdminHeader from "@/components/AdminHeader";
+import StaffLiveChatPanel from "@/components/chat/StaffLiveChatPanel";
 
 const navSections = [
   {
@@ -117,6 +118,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   const isAdmin = effectiveUser.role === "admin";
+  const isStaff = effectiveUser.role === "staff";
   const visibleSections = navSections
     .map((section) => ({
       ...section,
@@ -383,6 +385,36 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           padding: 1.5rem 2rem 2rem;
           overflow-y: auto;
         }
+        .staff-live-chat-launcher {
+          position: fixed;
+          right: 22px;
+          bottom: 22px;
+          z-index: 70;
+          border: none;
+          border-radius: 999px;
+          padding: 0.85rem 1rem;
+          background: var(--grad-brand);
+          color: #050d1a;
+          font-weight: 800;
+          box-shadow: 0 14px 32px rgba(0,212,255,0.24);
+          cursor: pointer;
+        }
+        .staff-live-chat-drawer {
+          position: fixed;
+          right: 22px;
+          bottom: 78px;
+          z-index: 70;
+          width: min(430px, calc(100vw - 1.5rem));
+          height: min(760px, calc(100vh - 110px));
+          background: rgba(5,13,26,0.98);
+          border: 1px solid var(--border);
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
         @media (max-width: 768px) {
           .admin-sidebar { width: 68px; }
           .admin-sidebar__logo-text,
@@ -390,6 +422,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           .admin-sidebar__section-title,
           .admin-sidebar__footer-text { opacity: 0; width: 0; }
           .admin-content__body { padding: 1rem; }
+          .staff-live-chat-drawer { right: 0.75rem; left: 0.75rem; width: auto; bottom: 0.75rem; height: min(72vh, 680px); }
+          .staff-live-chat-launcher { right: 0.75rem; bottom: 0.75rem; }
         }
       `}</style>
 
@@ -453,6 +487,18 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           <ErrorBoundary>{children}</ErrorBoundary>
         </div>
       </section>
+
+      {isStaff && (
+        <div className="staff-live-chat-drawer">
+          <div style={{ padding: "0.85rem 1rem", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem", background: "linear-gradient(135deg, rgba(0,212,255,0.06), rgba(168,85,247,0.04))" }}>
+            <div>
+              <div style={{ color: "var(--text)", fontWeight: 800, fontSize: "0.92rem" }}>Live chat khách hàng</div>
+              <div style={{ color: "var(--text-3)", fontSize: "0.72rem", marginTop: "0.1rem" }}>Nhận và phản hồi tin nhắn ngay trong khung này</div>
+            </div>
+          </div>
+          <StaffLiveChatPanel />
+        </div>
+      )}
     </div>
   );
 };
