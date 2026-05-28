@@ -81,3 +81,24 @@ export const wishlistApi = {
   removeItem: (productId: string) => http.delete<any>(`/api/wishlist/${productId}`),
   checkItem: (productId: string) => http.get<any>(`/api/wishlist/check/${productId}`),
 };
+
+export const paymentApi = {
+  confirmPayment: (payload: { orderId: string; method?: string; amount?: number; paymentId?: string }) =>
+    (typeof window !== 'undefined'
+      ? (async () => {
+          // Only include auth token when available to avoid backend rejecting guest/anonymous confirmations.
+          const body: any = { ...payload };
+          const token = localStorage.getItem('auth_token');
+          if (token) body.token = token;
+
+          const resp = await fetch('/api/payments/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+          const json = await resp.json().catch(() => ({}));
+          if (!resp.ok) throw new Error(json?.error || `HTTP ${resp.status}`);
+          return json;
+        })()
+      : http.post<any>('/api/payments/confirm', payload)),
+};

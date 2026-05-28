@@ -18,6 +18,7 @@ export function setupProxies(app: Express) {
   app.use("/api/orders", createServiceProxy(env.ORDER_SERVICE_URL, { "^/": "/api/orders/" }));
   app.use("/api/wishlist", createServiceProxy(env.ORDER_SERVICE_URL, { "^/": "/api/wishlist/" }));
   app.use("/api/coupons", createServiceProxy(env.ORDER_SERVICE_URL, { "^/": "/api/coupons/" }));
+  app.use("/api/payments", createServiceProxy(env.ORDER_SERVICE_URL, { "^/": "/api/payments/" }));
 
   // Review Service
   app.use("/api/reviews", createServiceProxy(env.REVIEW_SERVICE_URL, { "^/": "/api/reviews/" }));

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { AuthRequest, AppError, ErrorCode, HttpStatus, successResponse } from "@chatbot/common";
 import { orderService } from "../services/conference.service";
 
 // Minimal webhook handler scaffold for payment providers (MoMo, VNPAY)
@@ -40,6 +41,34 @@ export async function vnpayWebhook(req: Request, res: Response, next: NextFuncti
       }
     }
     return res.json({ success: true });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function confirmPayment(req: AuthRequest, res: Response, next: NextFunction) {
+  try {
+    const { orderId } = req.body as any;
+    if (!orderId) {
+      throw new AppError("Thiếu orderId", HttpStatus.BAD_REQUEST, ErrorCode.ORDER_INVALID_STATUS);
+    }
+
+    const userId = req.user?.userId;
+    if (!userId) {
+      throw new AppError("Không có quyền truy cập", HttpStatus.UNAUTHORIZED, ErrorCode.AUTH_UNAUTHENTICATED);
+    }
+
+    const order = await orderService.getOrderById(orderId, userId);
+    if (String(order.paymentMethod || "").toUpperCase() === "COD") {
+      throw new AppError("Đơn COD không xác nhận qua cổng online", HttpStatus.BAD_REQUEST, ErrorCode.ORDER_INVALID_STATUS);
+    }
+
+    if (String(order.paymentStatus || "").toUpperCase() !== "PAID") {
+      await orderService.updateOrderStatus(orderId, "CONFIRMED", "PAID");
+    }
+
+    const updated = await orderService.getOrderById(orderId, userId);
+    return res.json(successResponse(updated, "Xác nhận thanh toán thành công"));
   } catch (err) {
     next(err);
   }

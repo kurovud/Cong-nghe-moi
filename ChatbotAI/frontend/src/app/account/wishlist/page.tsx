@@ -99,14 +99,16 @@ export default function WishlistPage() {
       <div className="container section">
         <div
           style={{
-            padding: "1.5rem",
-            borderRadius: "20px",
-            border: "1px solid rgba(255,143,31,0.12)",
-            background: "linear-gradient(135deg, rgba(255,250,252,0.96), rgba(247,251,255,0.98))",
+            padding: "2rem",
+            borderRadius: "var(--r-lg)",
+            background: "var(--surface)",
+            border: "1px solid var(--border)",
+            backdropFilter: "blur(20px)",
+            textAlign: "center",
           }}
         >
-          <p style={{ margin: 0, color: "#162033" }}>
-            Vui lòng <Link href="/login">đăng nhập</Link> để xem danh sách yêu thích.
+          <p style={{ margin: 0, color: "var(--text-2)" }}>
+            Vui lòng <Link href="/login" style={{ color: "var(--cyan)", fontWeight: 600 }}>đăng nhập</Link> để xem danh sách yêu thích.
           </p>
         </div>
       </div>
@@ -114,7 +116,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="account-page">
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
       <div className="container">
         <nav className="breadcrumb">
           <Link href="/">Trang chủ</Link>
@@ -127,15 +129,16 @@ export default function WishlistPage() {
 
       <section className="section">
         <div className="container">
+
+          {/* Header Card */}
           <div
             style={{
-              display: "grid",
-              gap: "1rem",
-              padding: "1.4rem",
-              borderRadius: "24px",
-              border: "1px solid rgba(255,143,31,0.12)",
-              background: "linear-gradient(135deg, rgba(255,250,252,0.96), rgba(247,251,255,0.98))",
-              boxShadow: "0 18px 48px rgba(18,32,51,0.08)",
+              padding: "1.75rem",
+              borderRadius: "var(--r-2xl)",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              backdropFilter: "blur(20px)",
+              marginBottom: "1.5rem",
             }}
           >
             <div
@@ -143,124 +146,255 @@ export default function WishlistPage() {
                 display: "flex",
                 alignItems: "flex-start",
                 justifyContent: "space-between",
-                gap: "1rem",
+                gap: "1.5rem",
                 flexWrap: "wrap",
               }}
             >
-              <div style={{ display: "grid", gap: "0.55rem" }}>
+              {/* Title & Description */}
+              <div style={{ display: "grid", gap: "0.6rem", flex: 1, minWidth: 280 }}>
                 <span
                   style={{
                     display: "inline-flex",
                     width: "fit-content",
                     alignItems: "center",
                     gap: "0.45rem",
-                    padding: "0.42rem 0.8rem",
+                    padding: "0.42rem 0.85rem",
                     borderRadius: "999px",
-                    background: "rgba(255,179,193,0.22)",
-                    color: "#162033",
-                    fontWeight: 800,
-                    border: "1px solid rgba(255,143,31,0.12)",
+                    background: "rgba(239,68,68,0.1)",
+                    color: "var(--red)",
+                    fontWeight: 700,
+                    fontSize: "0.85rem",
+                    border: "1px solid rgba(239,68,68,0.2)",
                   }}
                 >
                   ❤️ Danh sách yêu thích
                 </span>
-                <h1 style={{ margin: 0, color: "#162033", fontSize: "clamp(1.8rem, 3vw, 2.5rem)" }}>
-                  Sản phẩm yêu thích ({wishlist.length})
+                <h1 style={{
+                  margin: 0,
+                  fontFamily: "var(--font-heading)",
+                  fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.02em",
+                }}>
+                  <span className="gradient-text">Sản phẩm yêu thích</span>
+                  <span style={{ color: "var(--text-3)", fontSize: "0.7em", marginLeft: "0.5rem" }}>
+                    ({wishlist.length})
+                  </span>
                 </h1>
-                <p style={{ margin: 0, color: "#4a5568", maxWidth: 720, lineHeight: 1.6 }}>
+                <p style={{
+                  margin: 0,
+                  color: "var(--text-3)",
+                  maxWidth: 720,
+                  lineHeight: 1.6,
+                  fontSize: "0.9rem",
+                }}>
                   Lưu lại các sản phẩm bạn quan tâm, so sánh nhanh giá và đẩy ngay sang giỏ hàng khi đã sẵn sàng mua.
                 </p>
               </div>
 
+              {/* Stats Box */}
               <div
                 style={{
                   minWidth: 260,
-                  padding: "1rem 1.1rem",
-                  borderRadius: "18px",
-                  background: "rgba(255,255,255,0.82)",
-                  border: "1px solid rgba(255,143,31,0.12)",
+                  padding: "1.1rem 1.25rem",
+                  borderRadius: "var(--r-lg)",
+                  background: "var(--surface-2)",
+                  border: "1px solid var(--border-2)",
                   display: "grid",
-                  gap: "0.6rem",
+                  gap: "0.7rem",
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
-                  <span style={{ color: "#7c8fa6", fontWeight: 700 }}>Tổng mục</span>
-                  <strong style={{ color: "#162033" }}>{wishlist.length}</strong>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "center" }}>
+                  <span style={{ color: "var(--text-3)", fontWeight: 600, fontSize: "0.88rem" }}>Tổng mục</span>
+                  <strong style={{
+                    color: "var(--text)",
+                    fontFamily: "var(--font-heading)",
+                    fontSize: "1.1rem",
+                  }}>{wishlist.length}</strong>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}>
-                  <span style={{ color: "#7c8fa6", fontWeight: 700 }}>Tổng giá trị</span>
-                  <strong style={{ color: "#ff6b9d" }}>{formatVND(totalValue)}</strong>
+                <div style={{
+                  height: 1,
+                  background: "var(--border)",
+                }} />
+                <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "center" }}>
+                  <span style={{ color: "var(--text-3)", fontWeight: 600, fontSize: "0.88rem" }}>Tổng giá trị</span>
+                  <strong style={{ fontSize: "1.1rem" }}>
+                    <span className="gradient-text">{formatVND(totalValue)}</span>
+                  </strong>
                 </div>
-                <Link href="/products" className="button btn-sm" style={{ width: "100%", justifyContent: "center" }}>
-                  Khám phá thêm sản phẩm
+                <Link
+                  href="/products"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.4rem",
+                    marginTop: "0.25rem",
+                    padding: "0.65rem 1rem",
+                    borderRadius: "var(--r)",
+                    background: "transparent",
+                    border: "1px solid var(--border-2)",
+                    color: "var(--text-2)",
+                    fontWeight: 600,
+                    fontSize: "0.88rem",
+                    textDecoration: "none",
+                    fontFamily: "var(--font-heading)",
+                    transition: "all 0.2s var(--ease)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "var(--cyan)";
+                    e.currentTarget.style.color = "var(--cyan)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border-2)";
+                    e.currentTarget.style.color = "var(--text-2)";
+                  }}
+                >
+                  Khám phá thêm sản phẩm →
                 </Link>
               </div>
             </div>
+          </div>
 
-            {actionError && (
-              <div
+          {/* Error Toast */}
+          {actionError && (
+            <div
+              style={{
+                padding: "0.85rem 1.1rem",
+                borderRadius: "var(--r)",
+                background: "rgba(239,68,68,0.1)",
+                border: "1px solid rgba(239,68,68,0.25)",
+                color: "var(--red)",
+                fontWeight: 600,
+                fontSize: "0.9rem",
+                marginBottom: "1.25rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              ⚠️ {actionError}
+            </div>
+          )}
+
+          {/* Empty State */}
+          {hydratedWishlist.length === 0 ? (
+            <div
+              style={{
+                display: "grid",
+                placeItems: "center",
+                gap: "1rem",
+                minHeight: 360,
+                textAlign: "center",
+                padding: "2.5rem",
+                borderRadius: "var(--r-xl)",
+                border: "1px dashed var(--border-2)",
+                background: "var(--surface)",
+                backdropFilter: "blur(20px)",
+              }}
+            >
+              <div style={{
+                width: 80,
+                height: 80,
+                borderRadius: "50%",
+                background: "rgba(239,68,68,0.08)",
+                border: "1px solid rgba(239,68,68,0.15)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "2.2rem",
+                animation: "pulse 2s infinite",
+              }}>
+                🤍
+              </div>
+              <h2 style={{
+                margin: 0,
+                fontFamily: "var(--font-heading)",
+                color: "var(--text)",
+                fontSize: "1.4rem",
+                fontWeight: 700,
+              }}>Chưa có sản phẩm yêu thích</h2>
+              <p style={{
+                margin: 0,
+                color: "var(--text-3)",
+                maxWidth: 480,
+                lineHeight: 1.6,
+                fontSize: "0.9rem",
+              }}>
+                Hãy thêm những sản phẩm bạn thích để quay lại xem nhanh, so sánh và mua ngay khi cần.
+              </p>
+              <Link
+                href="/products"
                 style={{
-                  padding: "0.85rem 1rem",
-                  borderRadius: "14px",
-                  background: "rgba(255,179,193,0.18)",
-                  border: "1px solid rgba(255,143,31,0.16)",
-                  color: "#162033",
+                  marginTop: "0.5rem",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.8rem 1.8rem",
+                  borderRadius: "var(--r)",
+                  background: "var(--grad-brand)",
+                  border: "none",
+                  color: "#fff",
                   fontWeight: 700,
+                  fontSize: "0.95rem",
+                  fontFamily: "var(--font-heading)",
+                  textDecoration: "none",
+                  boxShadow: "var(--shadow-cyan)",
+                  transition: "transform 0.2s var(--ease)",
                 }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
               >
-                {actionError}
-              </div>
-            )}
+                Xem sản phẩm
+              </Link>
+            </div>
+          ) : (
+            <div style={{ display: "grid", gap: "1rem" }}>
+              {hydratedWishlist.map((item) => {
+                const hasDiscount = item.discountPrice && item.discountPrice < item.price;
+                const discountPercent = hasDiscount
+                  ? Math.round(((item.price - item.discountPrice) / item.price) * 100)
+                  : 0;
 
-            {hydratedWishlist.length === 0 ? (
-              <div
-                style={{
-                  display: "grid",
-                  placeItems: "center",
-                  gap: "0.9rem",
-                  minHeight: 320,
-                  textAlign: "center",
-                  padding: "1.5rem",
-                  borderRadius: "20px",
-                  border: "1px dashed rgba(255,143,31,0.18)",
-                  background: "linear-gradient(135deg, rgba(255,250,252,0.9), rgba(247,251,255,0.92))",
-                }}
-              >
-                <div style={{ fontSize: "3rem" }}>🤍</div>
-                <h2 style={{ margin: 0, color: "#162033" }}>Chưa có sản phẩm yêu thích</h2>
-                <p style={{ margin: 0, color: "#4a5568", maxWidth: 480 }}>
-                  Hãy thêm những sản phẩm bạn thích để quay lại xem nhanh, so sánh và mua ngay khi cần.
-                </p>
-                <Link href="/products" className="button hero__btn-primary">
-                  Xem sản phẩm
-                </Link>
-              </div>
-            ) : (
-              <div style={{ display: "grid", gap: "1rem" }}>
-                {hydratedWishlist.map((item) => (
+                return (
                   <article
                     key={item.productId}
                     style={{
                       display: "grid",
-                      gridTemplateColumns: "120px minmax(0, 1fr) auto",
-                      gap: "1rem",
+                      gridTemplateColumns: "130px minmax(0, 1fr) auto",
+                      gap: "1.25rem",
                       alignItems: "stretch",
-                      padding: "1rem",
-                      borderRadius: "20px",
-                      background: "rgba(255,255,255,0.82)",
-                      border: "1px solid rgba(255,143,31,0.12)",
-                      boxShadow: "0 10px 28px rgba(18,32,51,0.06)",
+                      padding: "1.1rem",
+                      borderRadius: "var(--r-lg)",
+                      background: "var(--surface)",
+                      border: "1px solid var(--border)",
+                      backdropFilter: "blur(20px)",
+                      transition: "all 0.25s var(--ease)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(0,212,255,0.2)";
+                      e.currentTarget.style.boxShadow = "var(--shadow-lg)";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "var(--border)";
+                      e.currentTarget.style.boxShadow = "none";
+                      e.currentTarget.style.transform = "translateY(0)";
                     }}
                   >
+                    {/* Product Image */}
                     <Link
                       href={`/products/${item.category}/${item.productId}`}
                       style={{
                         position: "relative",
-                        borderRadius: "16px",
+                        borderRadius: "var(--r)",
                         overflow: "hidden",
-                        background: "linear-gradient(135deg, rgba(255,179,193,0.16), rgba(183,216,255,0.16))",
-                        border: "1px solid rgba(255,143,31,0.10)",
-                        minHeight: 120,
+                        background: "var(--surface-2)",
+                        border: "1px solid var(--border)",
+                        minHeight: 130,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
                       <img
@@ -269,46 +403,105 @@ export default function WishlistPage() {
                         onError={(event) => {
                           event.currentTarget.src = resolveProductImage(null);
                         }}
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          transition: "transform 0.3s var(--ease)",
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.08)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
                       />
+                      {hasDiscount && discountPercent > 0 && (
+                        <span style={{
+                          position: "absolute",
+                          top: 8,
+                          right: 8,
+                          padding: "0.2rem 0.55rem",
+                          borderRadius: "999px",
+                          background: "var(--grad-orange)",
+                          color: "#fff",
+                          fontWeight: 700,
+                          fontSize: "0.72rem",
+                          letterSpacing: "0.02em",
+                        }}>
+                          -{discountPercent}%
+                        </span>
+                      )}
                     </Link>
 
-                    <div style={{ display: "grid", gap: "0.75rem", minWidth: 0 }}>
+                    {/* Product Details */}
+                    <div style={{ display: "grid", gap: "0.7rem", minWidth: 0, alignContent: "start" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
                         <div style={{ minWidth: 0 }}>
-                          <span style={{ color: "#7c8fa6", fontWeight: 700, fontSize: "0.86rem" }}>{item.brand}</span>
-                          <h3 style={{ margin: "0.25rem 0 0", color: "#162033", fontSize: "clamp(1rem, 2vw, 1.2rem)" }}>{item.name}</h3>
+                          <span style={{
+                            display: "inline-block",
+                            padding: "0.18rem 0.55rem",
+                            borderRadius: "999px",
+                            background: "rgba(168,85,247,0.1)",
+                            border: "1px solid rgba(168,85,247,0.2)",
+                            color: "var(--purple)",
+                            fontWeight: 600,
+                            fontSize: "0.78rem",
+                            marginBottom: "0.3rem",
+                          }}>
+                            {item.brand}
+                          </span>
+                          <h3 style={{
+                            margin: "0.25rem 0 0",
+                            color: "var(--text)",
+                            fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
+                            fontFamily: "var(--font-heading)",
+                            fontWeight: 700,
+                            lineHeight: 1.3,
+                          }}>
+                            {item.name}
+                          </h3>
                         </div>
                         <span
                           style={{
                             alignSelf: "flex-start",
-                            padding: "0.35rem 0.75rem",
+                            padding: "0.3rem 0.7rem",
                             borderRadius: 999,
-                            background: "rgba(255,179,193,0.18)",
-                            border: "1px solid rgba(255,143,31,0.10)",
-                            color: "#162033",
+                            background: "rgba(239,68,68,0.08)",
+                            border: "1px solid rgba(239,68,68,0.2)",
+                            color: "var(--red)",
                             fontWeight: 700,
-                            fontSize: "0.8rem",
+                            fontSize: "0.78rem",
+                            whiteSpace: "nowrap",
                           }}
                         >
                           ❤️ Đã lưu
                         </span>
                       </div>
 
+                      {/* Price */}
                       <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
-                        <strong style={{ color: "#162033", fontSize: "1.08rem" }}>{formatVND(Number(item.discountPrice ?? item.price ?? 0))}</strong>
+                        <strong style={{
+                          color: "var(--cyan)",
+                          fontSize: "1.1rem",
+                          fontFamily: "var(--font-heading)",
+                        }}>
+                          {formatVND(Number(item.discountPrice ?? item.price ?? 0))}
+                        </strong>
                         {item.discountPrice && (
-                          <span style={{ color: "#7c8fa6", textDecoration: "line-through", fontSize: "0.92rem" }}>
+                          <span style={{
+                            color: "var(--text-3)",
+                            textDecoration: "line-through",
+                            fontSize: "0.88rem",
+                          }}>
                             {formatVND(Number(item.price ?? 0))}
                           </span>
                         )}
                       </div>
 
+                      {/* Description */}
                       <p
                         style={{
                           margin: 0,
-                          color: "#4a5568",
+                          color: "var(--text-3)",
                           lineHeight: 1.55,
+                          fontSize: "0.88rem",
                           display: "-webkit-box",
                           WebkitLineClamp: 2,
                           WebkitBoxOrient: "vertical",
@@ -319,37 +512,85 @@ export default function WishlistPage() {
                       </p>
                     </div>
 
-                    <div style={{ display: "grid", gap: "0.65rem", alignContent: "space-between", justifyItems: "stretch", minWidth: 150 }}>
-                      <button type="button"
-                        className="button btn-sm"
+                    {/* Action Buttons */}
+                    <div style={{
+                      display: "grid",
+                      gap: "0.6rem",
+                      alignContent: "space-between",
+                      justifyItems: "stretch",
+                      minWidth: 160,
+                    }}>
+                      <button
+                        type="button"
                         onClick={() => addToCart(item)}
                         disabled={busyProductId === item.productId}
-                        style={{ width: "100%" }}
+                        style={{
+                          width: "100%",
+                          padding: "0.75rem 1rem",
+                          borderRadius: "var(--r)",
+                          background: busyProductId === item.productId ? "var(--surface-2)" : "var(--grad-brand)",
+                          border: "none",
+                          color: "#fff",
+                          fontWeight: 700,
+                          fontSize: "0.88rem",
+                          fontFamily: "var(--font-heading)",
+                          cursor: busyProductId === item.productId ? "not-allowed" : "pointer",
+                          transition: "all 0.2s var(--ease)",
+                          boxShadow: busyProductId === item.productId ? "none" : "var(--shadow-cyan)",
+                          opacity: busyProductId === item.productId ? 0.6 : 1,
+                          letterSpacing: "0.02em",
+                        }}
+                        onMouseEnter={(e) => {
+                          if (busyProductId !== item.productId) {
+                            e.currentTarget.style.transform = "translateY(-1px)";
+                            e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,212,255,0.35)";
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = "translateY(0)";
+                          e.currentTarget.style.boxShadow = busyProductId !== item.productId ? "var(--shadow-cyan)" : "none";
+                        }}
                       >
-                        {busyProductId === item.productId ? "Đang thêm..." : "Thêm vào giỏ"}
+                        {busyProductId === item.productId ? "Đang thêm..." : "🛒 Thêm vào giỏ"}
                       </button>
-                      <button type="button"
+                      <button
+                        type="button"
                         onClick={() => remove(item.productId)}
                         disabled={busyProductId === item.productId}
                         style={{
                           width: "100%",
-                          padding: "0.7rem 0.95rem",
-                          borderRadius: "12px",
-                          border: "1px solid rgba(255,143,31,0.16)",
-                          background: "rgba(255,255,255,0.88)",
-                          color: "#162033",
+                          padding: "0.7rem 1rem",
+                          borderRadius: "var(--r)",
+                          border: "1px solid rgba(239,68,68,0.3)",
+                          background: "rgba(239,68,68,0.06)",
+                          color: "var(--red)",
                           fontWeight: 700,
-                          cursor: "pointer",
+                          fontSize: "0.85rem",
+                          fontFamily: "var(--font-heading)",
+                          cursor: busyProductId === item.productId ? "not-allowed" : "pointer",
+                          transition: "all 0.2s var(--ease)",
+                          opacity: busyProductId === item.productId ? 0.5 : 1,
+                        }}
+                        onMouseEnter={(e) => {
+                          if (busyProductId !== item.productId) {
+                            e.currentTarget.style.background = "rgba(239,68,68,0.15)";
+                            e.currentTarget.style.borderColor = "var(--red)";
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = "rgba(239,68,68,0.06)";
+                          e.currentTarget.style.borderColor = "rgba(239,68,68,0.3)";
                         }}
                       >
                         Xóa khỏi yêu thích
                       </button>
                     </div>
                   </article>
-                ))}
-              </div>
-            )}
-          </div>
+                );
+              })}
+            </div>
+          )}
+
         </div>
       </section>
     </div>

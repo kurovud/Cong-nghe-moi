@@ -110,101 +110,260 @@ export default function ServicesPage() {
     setBookingData({ name: "", phone: "", email: "", date: "", notes: "" });
   };
 
+  /* ---- shared inline‑style helpers ---- */
+  const inputStyle: React.CSSProperties = {
+    padding: "0.85rem 1rem",
+    borderRadius: "var(--r)",
+    border: "1px solid var(--border-2)",
+    background: "var(--surface)",
+    color: "var(--text)",
+    fontSize: "0.95rem",
+    fontFamily: "var(--font)",
+    outline: "none",
+    transition: "border-color 0.25s var(--ease), box-shadow 0.25s var(--ease)",
+    width: "100%",
+  };
+
+  const categoryIconMap: Record<string, string> = {
+    assembly: "🔧",
+    delivery: "🚚",
+    support: "🛡️",
+    consultation: "💡",
+  };
+
   return (
-    <div className="services-storefront">
-      <section className="products-hero" style={{ background: "linear-gradient(135deg, #f0d1e0 0%, #e8e0f0 100%)" }}>
-        <div className="container">
-          <div style={{ display: "grid", gap: "0.65rem", maxWidth: 760 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", width: "fit-content", padding: "0.42rem 0.8rem", borderRadius: 999, background: "rgba(255,255,255,0.72)", color: "#162033", fontWeight: 800, border: "1px solid rgba(255,143,31,0.12)" }}>
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      {/* ===== BREADCRUMB ===== */}
+      <div className="container" style={{ paddingTop: "1.25rem" }}>
+        <nav className="breadcrumb">
+          <Link href="/">Trang Chủ</Link>
+          <span>/</span>
+          <span style={{ color: "var(--cyan)" }}>Dịch Vụ</span>
+        </nav>
+      </div>
+
+      {/* ===== HERO SECTION ===== */}
+      <section
+        style={{
+          position: "relative",
+          padding: "3.5rem 0 3rem",
+          overflow: "hidden",
+        }}
+      >
+        {/* hero glow */}
+        <div style={{
+          position: "absolute", top: "-40%", left: "-10%", width: "55%", height: "120%",
+          background: "radial-gradient(ellipse at center, rgba(0,212,255,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+        <div style={{
+          position: "absolute", bottom: "-30%", right: "-5%", width: "45%", height: "100%",
+          background: "radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }} />
+
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div style={{ display: "grid", gap: "1rem", maxWidth: 780 }}>
+            <span
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                width: "fit-content", padding: "0.45rem 1rem", borderRadius: 999,
+                background: "linear-gradient(135deg, rgba(0,212,255,0.12), rgba(168,85,247,0.12))",
+                border: "1px solid var(--border-2)",
+                color: "var(--cyan)", fontWeight: 700, fontSize: "0.82rem",
+                letterSpacing: "0.06em", textTransform: "uppercase",
+              }}
+            >
               🛠️ DỊCH VỤ HỖ TRỢ
             </span>
-            <h1 style={{ color: "#162033", margin: 0 }}>Đặt dịch vụ nhanh, rõ ràng và đồng bộ với hệ thống</h1>
-            <p style={{ color: "#4a5568", fontSize: "1.05rem", margin: 0 }}>
+
+            <h1
+              style={{
+                margin: 0,
+                fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
+                fontFamily: "var(--font-heading)",
+                fontWeight: 700,
+                lineHeight: 1.15,
+              }}
+            >
+              <span className="gradient-text">Đặt dịch vụ nhanh,</span>{" "}
+              <span style={{ color: "var(--text)" }}>rõ ràng và đồng bộ</span>
+            </h1>
+
+            <p style={{ color: "var(--text-2)", fontSize: "1.08rem", margin: 0, maxWidth: 600, lineHeight: 1.6 }}>
               Tập trung vào trải nghiệm đặt lịch, theo dõi yêu cầu và chuyển phần quản trị sang khu vực admin.
             </p>
-            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.25rem" }}>
-              <div style={{ padding: "0.7rem 1rem", borderRadius: 999, background: "rgba(255,255,255,0.72)", border: "1px solid rgba(255,143,31,0.12)", color: "#162033", fontWeight: 700 }}>
-                {services.length} dịch vụ đang mở
+
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+              <div
+                style={{
+                  padding: "0.6rem 1.15rem", borderRadius: 999,
+                  background: "var(--surface-2)", border: "1px solid var(--border)",
+                  color: "var(--text)", fontWeight: 600, fontSize: "0.9rem",
+                  display: "flex", alignItems: "center", gap: "0.45rem",
+                }}
+              >
+                <span style={{ color: "var(--cyan)", fontWeight: 800 }}>{services.length}</span> dịch vụ đang mở
               </div>
               {user?.role === "admin" && (
-                <Link href="/admin/services" className="button btn-sm">
+                <Link
+                  href="/admin/services"
+                  className="btn-primary btn-sm"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}
+                >
                   ⚙️ Mở trang quản trị
                 </Link>
               )}
             </div>
+
             {message && (
-              <div style={{ padding: "0.8rem 1rem", borderRadius: 16, background: "rgba(255,255,255,0.72)", border: "1px solid rgba(255,143,31,0.12)", color: "#162033", fontWeight: 700, width: "fit-content" }}>
-                {message}
+              <div
+                style={{
+                  padding: "0.75rem 1.1rem", borderRadius: "var(--r)",
+                  background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)",
+                  color: "var(--green)", fontWeight: 600, width: "fit-content",
+                  display: "flex", alignItems: "center", gap: "0.45rem",
+                }}
+              >
+                ✅ {message}
               </div>
             )}
           </div>
         </div>
       </section>
 
-      <section className="products-layout">
+      {/* ===== CATEGORY FILTERS + SERVICE CARDS ===== */}
+      <section style={{ padding: "0 0 3rem" }}>
         <div className="container">
-          <div style={{ display: "grid", gap: "1.25rem" }}>
+          <div style={{ display: "grid", gap: "1.5rem" }}>
+            {/* filters row */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-              <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "0.55rem", flexWrap: "wrap" }}>
                 {categories.map((category) => (
-                  <button type="button"
+                  <button
+                    type="button"
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
                     style={{
-                      padding: "0.55rem 1rem",
+                      padding: "0.55rem 1.1rem",
                       borderRadius: 999,
-                      border: "1px solid rgba(255,143,31,0.12)",
-                      background: selectedCategory === category.id ? "linear-gradient(135deg, #ffb3c1, #ff9f7a)" : "rgba(255,250,252,0.92)",
-                      color: "#162033",
-                      fontWeight: 700,
+                      border: selectedCategory === category.id ? "1px solid var(--cyan)" : "1px solid var(--border)",
+                      background: selectedCategory === category.id
+                        ? "linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.10))"
+                        : "var(--surface)",
+                      color: selectedCategory === category.id ? "var(--cyan)" : "var(--text-2)",
+                      fontWeight: 600,
                       cursor: "pointer",
+                      transition: "all 0.25s var(--ease)",
+                      fontSize: "0.88rem",
                     }}
                   >
                     {category.label}
                   </button>
                 ))}
               </div>
-              <div style={{ padding: "0.7rem 1rem", borderRadius: 999, background: "rgba(255,255,255,0.72)", border: "1px solid rgba(255,143,31,0.12)", color: "#162033", fontWeight: 700 }}>
-                Đặt lịch và theo dõi ngay trên trang này
+              <div
+                style={{
+                  padding: "0.55rem 1rem", borderRadius: 999,
+                  background: "var(--surface)", border: "1px solid var(--border)",
+                  color: "var(--text-3)", fontWeight: 500, fontSize: "0.85rem",
+                }}
+              >
+                📅 Đặt lịch và theo dõi ngay trên trang này
               </div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1rem" }}>
+            {/* service cards grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.25rem" }}>
               {filteredServices.map((service) => (
-                <article key={service.id} className="service-card" style={{ display: "grid", gap: "0.9rem", padding: "1.3rem" }}>
+                <article
+                  key={service.id}
+                  className="glass-card"
+                  style={{
+                    display: "grid", gap: "1rem", padding: "1.5rem",
+                    borderRadius: "var(--r-lg)",
+                    transition: "transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease)",
+                    cursor: "default",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-cyan)";
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,212,255,0.25)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                    (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                    (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+                  }}
+                >
+                  {/* header */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.75rem" }}>
                     <div>
-                      <div style={{ fontSize: "2rem", lineHeight: 1 }}>{service.icon}</div>
-                      <h3 className="service-title" style={{ marginTop: "0.45rem" }}>{service.name}</h3>
-                      <p style={{ margin: 0, color: "#7c8fa6", fontSize: "0.85rem" }}>{service.duration || "Thời gian linh hoạt"}</p>
+                      <div
+                        style={{
+                          width: 48, height: 48, borderRadius: "var(--r-sm)",
+                          background: "linear-gradient(135deg, rgba(0,212,255,0.1), rgba(168,85,247,0.1))",
+                          border: "1px solid var(--border)",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: "1.5rem", marginBottom: "0.6rem",
+                        }}
+                      >
+                        {service.icon}
+                      </div>
+                      <h3 style={{ margin: 0, color: "var(--text)", fontWeight: 700, fontSize: "1.05rem", fontFamily: "var(--font-heading)" }}>
+                        {service.name}
+                      </h3>
+                      <p style={{ margin: "0.2rem 0 0", color: "var(--text-3)", fontSize: "0.82rem" }}>
+                        {service.duration || "Thời gian linh hoạt"}
+                      </p>
                     </div>
-                    <span style={{ padding: "0.4rem 0.75rem", borderRadius: 999, background: service.inStock ? "rgba(255,179,193,0.18)" : "rgba(215,166,255,0.18)", color: "#162033", fontWeight: 700, fontSize: "0.78rem" }}>
-                      {service.inStock ? "Còn nhận lịch" : "Tạm ngưng"}
+                    <span
+                      className={service.inStock ? "badge--success" : "badge--danger"}
+                      style={{
+                        padding: "0.35rem 0.7rem", borderRadius: 999,
+                        fontSize: "0.75rem", fontWeight: 700, whiteSpace: "nowrap",
+                      }}
+                    >
+                      {service.inStock ? "✓ Còn nhận lịch" : "✕ Tạm ngưng"}
                     </span>
                   </div>
 
-                  <p style={{ margin: 0, color: "#4a5568", lineHeight: 1.55 }}>{service.description}</p>
+                  {/* description */}
+                  <p style={{ margin: 0, color: "var(--text-2)", lineHeight: 1.6, fontSize: "0.92rem" }}>
+                    {service.description}
+                  </p>
 
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
+                  {/* features */}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
                     {service.features.slice(0, 4).map((feature) => (
-                      <span key={feature} className="badge badge--blue">{feature}</span>
+                      <span
+                        key={feature}
+                        style={{
+                          padding: "0.3rem 0.65rem", borderRadius: 999,
+                          background: "rgba(0,212,255,0.08)", border: "1px solid rgba(0,212,255,0.15)",
+                          color: "var(--cyan)", fontSize: "0.76rem", fontWeight: 600,
+                        }}
+                      >
+                        {feature}
+                      </span>
                     ))}
                   </div>
 
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem" }}>
-                    <strong style={{ color: "#162033", fontSize: "1.1rem" }}>
+                  {/* price + CTA */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem", marginTop: "auto" }}>
+                    <strong
+                      className="gradient-text"
+                      style={{ fontSize: "1.15rem", fontFamily: "var(--font-heading)" }}
+                    >
                       {service.price === 0 ? "Miễn phí" : `${new Intl.NumberFormat("vi-VN").format(service.price)}₫`}
                     </strong>
-                    <button type="button"
+                    <button
+                      type="button"
                       onClick={() => openBooking(service)}
+                      className="btn-primary btn-sm"
                       style={{
-                        padding: "0.65rem 1rem",
-                        borderRadius: 12,
-                        border: "none",
-                        background: "linear-gradient(135deg, #ffb3c1, #ff9f7a)",
-                        color: "#162033",
-                        fontWeight: 800,
-                        cursor: "pointer",
+                        display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                        whiteSpace: "nowrap",
                       }}
                     >
                       📅 Đặt ngay
@@ -213,59 +372,250 @@ export default function ServicesPage() {
                 </article>
               ))}
             </div>
+
+            {filteredServices.length === 0 && (
+              <div style={{
+                textAlign: "center", padding: "3rem 1rem", color: "var(--text-3)",
+                background: "var(--surface)", borderRadius: "var(--r-lg)", border: "1px solid var(--border)",
+              }}>
+                <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>🔍</div>
+                <p style={{ margin: 0, fontWeight: 600, color: "var(--text-2)" }}>Không tìm thấy dịch vụ nào</p>
+                <p style={{ margin: "0.35rem 0 0", fontSize: "0.88rem" }}>Hãy thử chọn danh mục khác.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      <section className="section">
+      {/* ===== RECENT BOOKINGS + TRUST BADGES ===== */}
+      <section className="section" style={{ paddingTop: "1rem" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "1rem" }}>
-            <div style={{ background: "linear-gradient(135deg, rgba(255,250,252,0.96), rgba(247,251,255,0.97))", border: "1px solid rgba(255,143,31,0.12)", borderRadius: "22px", padding: "1.3rem" }}>
-              <h2 style={{ marginTop: 0, color: "#162033" }}>🗓️ Yêu cầu gần đây</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "1.25rem" }}>
+            {/* recent bookings */}
+            <div
+              className="glass-card"
+              style={{ padding: "1.5rem", borderRadius: "var(--r-xl)" }}
+            >
+              <h2 style={{ marginTop: 0, color: "var(--text)", fontFamily: "var(--font-heading)", fontSize: "1.2rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                🗓️ <span className="gradient-text">Yêu cầu gần đây</span>
+              </h2>
               {recentBookings.length === 0 ? (
-                <p style={{ color: "#7c8fa6" }}>Chưa có yêu cầu nào được lưu.</p>
+                <div style={{ textAlign: "center", padding: "2rem 1rem", color: "var(--text-3)" }}>
+                  <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>📋</div>
+                  <p style={{ margin: 0, fontSize: "0.9rem" }}>Chưa có yêu cầu nào được lưu.</p>
+                </div>
               ) : (
-                <div style={{ display: "grid", gap: "0.85rem" }}>
+                <div style={{ display: "grid", gap: "0.75rem" }}>
                   {recentBookings.map((booking) => (
-                    <div key={booking.id} style={{ background: "rgba(255,255,255,0.74)", border: "1px solid rgba(255,143,31,0.10)", borderRadius: 16, padding: "0.95rem" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", marginBottom: "0.35rem" }}>
-                        <strong style={{ color: "#162033" }}>{booking.serviceName}</strong>
-                        <span style={{ color: "#ff6b9d", fontWeight: 700 }}>Đang chờ</span>
+                    <div
+                      key={booking.id}
+                      style={{
+                        background: "var(--surface-2)", border: "1px solid var(--border)",
+                        borderRadius: "var(--r)", padding: "1rem",
+                        transition: "border-color 0.2s var(--ease)",
+                      }}
+                    >
+                      <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", marginBottom: "0.4rem" }}>
+                        <strong style={{ color: "var(--text)", fontSize: "0.92rem" }}>{booking.serviceName}</strong>
+                        <span className="badge--warning" style={{ padding: "0.25rem 0.6rem", borderRadius: 999, fontSize: "0.72rem", fontWeight: 700 }}>
+                          ⏳ Đang chờ
+                        </span>
                       </div>
-                      <p style={{ margin: 0, color: "#4a5568" }}>{booking.name} • {booking.phone}</p>
-                      <p style={{ margin: "0.25rem 0 0", color: "#7c8fa6" }}>Hẹn ngày: {new Date(booking.date).toLocaleDateString("vi-VN")}</p>
+                      <p style={{ margin: 0, color: "var(--text-2)", fontSize: "0.85rem" }}>
+                        {booking.name} • {booking.phone}
+                      </p>
+                      <p style={{ margin: "0.2rem 0 0", color: "var(--text-3)", fontSize: "0.82rem" }}>
+                        📅 Hẹn ngày: {new Date(booking.date).toLocaleDateString("vi-VN")}
+                      </p>
                     </div>
                   ))}
                 </div>
               )}
             </div>
 
-            <div style={{ background: "linear-gradient(135deg, rgba(255,250,252,0.96), rgba(247,251,255,0.97))", border: "1px solid rgba(255,143,31,0.12)", borderRadius: "22px", padding: "1.3rem" }}>
-              <h2 style={{ marginTop: 0, color: "#162033" }}>✨ Vì sao dễ dùng hơn</h2>
-              <ul style={{ margin: 0, paddingLeft: "1.1rem", color: "#4a5568", display: "grid", gap: "0.5rem", lineHeight: 1.55 }}>
-                <li>Giao diện chỉ còn luồng đặt lịch cho khách, không lẫn chức năng quản trị.</li>
-                <li>Dữ liệu dịch vụ được chia sẻ với khu admin nên thay đổi sẽ đồng bộ.</li>
-                <li>Booking lưu lại trong trình duyệt để xem nhanh các yêu cầu gần đây.</li>
-                <li>Có liên kết sang <strong>/admin/services</strong> cho tài khoản quản trị.</li>
-              </ul>
+            {/* trust badges */}
+            <div
+              className="glass-card"
+              style={{ padding: "1.5rem", borderRadius: "var(--r-xl)" }}
+            >
+              <h2 style={{ marginTop: 0, color: "var(--text)", fontFamily: "var(--font-heading)", fontSize: "1.2rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                ✨ <span className="gradient-text">Cam kết dịch vụ</span>
+              </h2>
+              <div style={{ display: "grid", gap: "0.75rem" }}>
+                {[
+                  { icon: "🛡️", title: "Bảo hành chính hãng", desc: "Linh kiện bảo hành theo chính sách nhà sản xuất" },
+                  { icon: "🔄", title: "Đồng bộ hệ thống", desc: "Dữ liệu dịch vụ chia sẻ với khu admin, thay đổi đồng bộ" },
+                  { icon: "📱", title: "Hỗ trợ 24/7", desc: "Đội ngũ kỹ thuật viên luôn sẵn sàng hỗ trợ" },
+                  { icon: "⚡", title: "Xử lý nhanh chóng", desc: "Booking lưu lại trình duyệt, xem nhanh yêu cầu gần đây" },
+                ].map((badge) => (
+                  <div
+                    key={badge.title}
+                    style={{
+                      display: "flex", gap: "0.85rem", alignItems: "flex-start",
+                      padding: "0.85rem", borderRadius: "var(--r)",
+                      background: "var(--surface-2)", border: "1px solid var(--border)",
+                      transition: "border-color 0.2s var(--ease)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 40, height: 40, borderRadius: "var(--r-sm)",
+                        background: "linear-gradient(135deg, rgba(0,212,255,0.1), rgba(168,85,247,0.1))",
+                        border: "1px solid var(--border)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: "1.15rem", flexShrink: 0,
+                      }}
+                    >
+                      {badge.icon}
+                    </div>
+                    <div>
+                      <strong style={{ color: "var(--text)", fontSize: "0.9rem" }}>{badge.title}</strong>
+                      <p style={{ margin: "0.15rem 0 0", color: "var(--text-3)", fontSize: "0.82rem", lineHeight: 1.5 }}>
+                        {badge.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {user?.role === "admin" && (
+                <div style={{ marginTop: "1rem", padding: "0.7rem 1rem", borderRadius: "var(--r)", background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.18)", fontSize: "0.85rem", color: "var(--purple)" }}>
+                  💡 Quản trị viên có thể truy cập <Link href="/admin/services" style={{ color: "var(--cyan)", textDecoration: "underline" }}>/admin/services</Link> để quản lý.
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
+      {/* ===== BOOKING MODAL ===== */}
       {selectedService && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(15, 23, 42, 0.55)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1rem" }}>
-          <div style={{ width: "min(560px, 100%)", borderRadius: 24, padding: "1.4rem", background: "linear-gradient(135deg, rgba(255,255,255,0.98), rgba(247,251,255,0.98))", border: "1px solid rgba(255,143,31,0.12)", boxShadow: "0 24px 64px rgba(18, 32, 51, 0.18)" }}>
-            <h2 style={{ marginTop: 0, color: "#162033" }}>Đặt Dịch Vụ: {selectedService.name}</h2>
+        <div
+          style={{
+            position: "fixed", inset: 0,
+            background: "rgba(5,13,26,0.75)", backdropFilter: "blur(12px)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            zIndex: 1000, padding: "1rem",
+          }}
+          onClick={(e) => { if (e.target === e.currentTarget) setSelectedService(null); }}
+        >
+          <div
+            style={{
+              width: "min(560px, 100%)",
+              borderRadius: "var(--r-2xl)",
+              padding: "1.75rem",
+              background: "linear-gradient(145deg, rgba(15,23,42,0.97), rgba(5,13,26,0.98))",
+              border: "1px solid var(--border-2)",
+              boxShadow: "var(--shadow-lg), 0 0 80px rgba(0,212,255,0.06)",
+              maxHeight: "90vh", overflowY: "auto",
+            }}
+          >
+            {/* modal header */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.25rem" }}>
+              <div>
+                <p style={{ margin: 0, color: "var(--text-3)", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>
+                  Đặt Dịch Vụ
+                </p>
+                <h2 style={{ margin: "0.25rem 0 0", color: "var(--text)", fontFamily: "var(--font-heading)", fontSize: "1.3rem" }}>
+                  {selectedService.name}
+                </h2>
+                <p className="gradient-text" style={{ margin: "0.35rem 0 0", fontWeight: 700, fontSize: "1.1rem" }}>
+                  {selectedService.price === 0 ? "Miễn phí" : `${new Intl.NumberFormat("vi-VN").format(selectedService.price)}₫`}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedService(null)}
+                style={{
+                  width: 36, height: 36, borderRadius: "var(--r-sm)",
+                  background: "var(--surface-2)", border: "1px solid var(--border)",
+                  color: "var(--text-3)", fontSize: "1.1rem", cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  transition: "all 0.2s var(--ease)",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* booking form */}
             <div style={{ display: "grid", gap: "0.85rem" }}>
-              <input placeholder="Họ và tên" value={bookingData.name} onChange={(event) => setBookingData((current) => ({ ...current, name: event.target.value }))} style={{ padding: "0.8rem", borderRadius: 12, border: "1px solid rgba(255,143,31,0.18)" }} />
-              <input placeholder="Số điện thoại" value={bookingData.phone} onChange={(event) => setBookingData((current) => ({ ...current, phone: event.target.value }))} style={{ padding: "0.8rem", borderRadius: 12, border: "1px solid rgba(255,143,31,0.18)" }} />
-              <input placeholder="Email" value={bookingData.email} onChange={(event) => setBookingData((current) => ({ ...current, email: event.target.value }))} style={{ padding: "0.8rem", borderRadius: 12, border: "1px solid rgba(255,143,31,0.18)" }} />
-              <input type="date" value={bookingData.date} onChange={(event) => setBookingData((current) => ({ ...current, date: event.target.value }))} style={{ padding: "0.8rem", borderRadius: 12, border: "1px solid rgba(255,143,31,0.18)" }} />
-              <textarea placeholder="Ghi chú (tuỳ chọn)" value={bookingData.notes} onChange={(event) => setBookingData((current) => ({ ...current, notes: event.target.value }))} rows={4} style={{ padding: "0.8rem", borderRadius: 12, border: "1px solid rgba(255,143,31,0.18)" }} />
-              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                <button type="button" onClick={submitBooking} className="button" style={{ flex: 1, minWidth: 180 }}>Xác Nhận Đặt Hàng</button>
-                <button type="button" onClick={() => setSelectedService(null)} className="button btn-sm" style={{ flex: 1, minWidth: 180 }}>Hủy</button>
+              <div className="form-group">
+                <label style={{ color: "var(--text-2)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>
+                  Họ và tên *
+                </label>
+                <input
+                  placeholder="Nguyễn Văn A"
+                  value={bookingData.name}
+                  onChange={(event) => setBookingData((current) => ({ ...current, name: event.target.value }))}
+                  style={inputStyle}
+                />
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.85rem" }}>
+                <div className="form-group">
+                  <label style={{ color: "var(--text-2)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>
+                    Số điện thoại *
+                  </label>
+                  <input
+                    placeholder="0912 345 678"
+                    value={bookingData.phone}
+                    onChange={(event) => setBookingData((current) => ({ ...current, phone: event.target.value }))}
+                    style={inputStyle}
+                  />
+                </div>
+                <div className="form-group">
+                  <label style={{ color: "var(--text-2)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>
+                    Email *
+                  </label>
+                  <input
+                    placeholder="email@example.com"
+                    value={bookingData.email}
+                    onChange={(event) => setBookingData((current) => ({ ...current, email: event.target.value }))}
+                    style={inputStyle}
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label style={{ color: "var(--text-2)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>
+                  Ngày hẹn *
+                </label>
+                <input
+                  type="date"
+                  value={bookingData.date}
+                  onChange={(event) => setBookingData((current) => ({ ...current, date: event.target.value }))}
+                  style={{ ...inputStyle, colorScheme: "dark" }}
+                />
+              </div>
+              <div className="form-group">
+                <label style={{ color: "var(--text-2)", fontSize: "0.82rem", fontWeight: 600, marginBottom: "0.3rem", display: "block" }}>
+                  Ghi chú
+                </label>
+                <textarea
+                  placeholder="Mô tả yêu cầu hoặc ghi chú thêm..."
+                  value={bookingData.notes}
+                  onChange={(event) => setBookingData((current) => ({ ...current, notes: event.target.value }))}
+                  rows={3}
+                  style={{ ...inputStyle, resize: "vertical" as any }}
+                />
+              </div>
+
+              <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "0.35rem" }}>
+                <button
+                  type="button"
+                  onClick={submitBooking}
+                  className="btn-primary"
+                  style={{ flex: 1, minWidth: 180, padding: "0.85rem 1.5rem", fontSize: "0.95rem" }}
+                >
+                  ✅ Xác Nhận Đặt Hàng
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedService(null)}
+                  className="btn-ghost"
+                  style={{ flex: 1, minWidth: 180, padding: "0.85rem 1.5rem", fontSize: "0.95rem" }}
+                >
+                  Hủy
+                </button>
               </div>
             </div>
           </div>

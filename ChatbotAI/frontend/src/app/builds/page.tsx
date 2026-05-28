@@ -203,185 +203,485 @@ const BuildsPage = () => {
     setActionMessage(`${build.name} đã được thêm vào giỏ hàng hệ thống.`);
   };
 
+  /* ---- tier styling helpers ---- */
+  const getTierStyle = (price: number): { label: string; color: string; bg: string; border: string; glow: string } => {
+    if (price >= 30000000) return {
+      label: '🏆 Gold',
+      color: '#fbbf24',
+      bg: 'rgba(251,191,36,0.08)',
+      border: 'rgba(251,191,36,0.25)',
+      glow: '0 0 20px rgba(251,191,36,0.1)',
+    };
+    if (price >= 15000000) return {
+      label: '🥈 Silver',
+      color: '#94a3b8',
+      bg: 'rgba(148,163,184,0.08)',
+      border: 'rgba(148,163,184,0.2)',
+      glow: '0 0 20px rgba(148,163,184,0.08)',
+    };
+    return {
+      label: '🥉 Bronze',
+      color: '#f97316',
+      bg: 'rgba(249,115,22,0.08)',
+      border: 'rgba(249,115,22,0.2)',
+      glow: '0 0 20px rgba(249,115,22,0.08)',
+    };
+  };
+
+  const specIcons: Record<string, string> = {
+    cpu: '🧠',
+    gpu: '🎮',
+    ram: '💾',
+    storage: '💿',
+    psu: '⚡',
+  };
+
+  const specLabels: Record<string, string> = {
+    cpu: 'CPU',
+    gpu: 'GPU',
+    ram: 'RAM',
+    storage: 'Storage',
+    psu: 'PSU',
+  };
+
+  const inputStyle: React.CSSProperties = {
+    padding: '0.8rem 1rem',
+    borderRadius: 'var(--r)',
+    border: '1px solid var(--border-2)',
+    background: 'var(--surface)',
+    color: 'var(--text)',
+    fontSize: '0.92rem',
+    fontFamily: 'var(--font)',
+    outline: 'none',
+    width: '100%',
+    transition: 'border-color 0.25s var(--ease)',
+  };
+
   return (
-    <div className="builds-storefront">
-      {/* ===== BUILDS HERO ===== */}
-      <section className="products-hero" style={{ background: 'linear-gradient(135deg, #f2d5e0 0%, #dfe8f8 100%)' }}>
-        <div className="container">
-          <h1 style={{ color: '#162033', marginBottom: '1rem' }}>🎮 PC BUILD SẴN</h1>
-          <p style={{ color: '#4a5568', fontSize: '1.1rem' }}>
-            Chọn cấu hình hoàn chỉnh theo nhu cầu của bạn
-          </p>
-          <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', marginTop: '1.25rem' }}>
-            <div style={{ background: 'rgba(255,255,255,0.72)', border: '1px solid rgba(255,143,31,0.12)', borderRadius: '999px', padding: '0.45rem 0.9rem', color: '#162033', fontWeight: 700 }}>
-              {cart.totalItems} sản phẩm trong giỏ
-            </div>
-            <button type="button"
-              onClick={() => router.push('/cart')}
+    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      {/* ===== BREADCRUMB ===== */}
+      <div className="container" style={{ paddingTop: '1.25rem' }}>
+        <nav className="breadcrumb">
+          <Link href="/">Trang Chủ</Link>
+          <span>/</span>
+          <span style={{ color: 'var(--cyan)' }}>PC Build Sẵn</span>
+        </nav>
+      </div>
+
+      {/* ===== HERO BANNER ===== */}
+      <section
+        style={{
+          position: 'relative',
+          padding: '3.5rem 0 3rem',
+          overflow: 'hidden',
+        }}
+      >
+        {/* ambient glows */}
+        <div style={{
+          position: 'absolute', top: '-50%', left: '10%', width: '40%', height: '140%',
+          background: 'radial-gradient(ellipse at center, rgba(0,212,255,0.07) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', top: '-30%', right: '5%', width: '35%', height: '120%',
+          background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.06) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: '-20%', left: '40%', width: '30%', height: '80%',
+          background: 'radial-gradient(ellipse at center, rgba(249,115,22,0.05) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'grid', gap: '1rem', maxWidth: 780 }}>
+            <span
               style={{
-                padding: '0.6rem 1rem',
-                background: 'linear-gradient(135deg, #ffb3c1, #ff9f7a)',
-                color: '#162033',
-                border: 'none',
-                borderRadius: '999px',
-                fontWeight: 700,
-                cursor: 'pointer',
+                display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+                width: 'fit-content', padding: '0.45rem 1rem', borderRadius: 999,
+                background: 'linear-gradient(135deg, rgba(0,212,255,0.12), rgba(168,85,247,0.12))',
+                border: '1px solid var(--border-2)',
+                color: 'var(--cyan)', fontWeight: 700, fontSize: '0.82rem',
+                letterSpacing: '0.06em', textTransform: 'uppercase',
               }}
             >
-              Xem Giỏ Hàng
-            </button>
-          </div>
-          {actionMessage && (
-            <p style={{ marginTop: '1rem', color: '#162033', background: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,143,31,0.12)', display: 'inline-block', padding: '0.65rem 0.9rem', borderRadius: '12px' }}>
-              {actionMessage}
+              🎮 PC BUILD SẴN
+            </span>
+
+            <h1
+              style={{
+                margin: 0,
+                fontSize: 'clamp(1.8rem, 4.5vw, 2.8rem)',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 700,
+                lineHeight: 1.12,
+              }}
+            >
+              <span className="gradient-text">PC Build Sẵn</span>{' '}
+              <span style={{ color: 'var(--text)' }}>— Chọn & Game Ngay</span>
+            </h1>
+
+            <p style={{ color: 'var(--text-2)', fontSize: '1.08rem', margin: 0, maxWidth: 580, lineHeight: 1.6 }}>
+              Chọn cấu hình hoàn chỉnh theo nhu cầu của bạn — từ gaming casual đến workstation chuyên nghiệp.
             </p>
-          )}
+
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+              <div
+                style={{
+                  padding: '0.6rem 1.1rem', borderRadius: 999,
+                  background: 'var(--surface-2)', border: '1px solid var(--border)',
+                  color: 'var(--text)', fontWeight: 600, fontSize: '0.9rem',
+                  display: 'flex', alignItems: 'center', gap: '0.4rem',
+                }}
+              >
+                🛒 <span style={{ color: 'var(--cyan)', fontWeight: 800 }}>{cart.totalItems}</span> sản phẩm trong giỏ
+              </div>
+              <button
+                type="button"
+                onClick={() => router.push('/cart')}
+                className="btn-primary btn-sm"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+              >
+                Xem Giỏ Hàng →
+              </button>
+            </div>
+
+            {actionMessage && (
+              <div
+                style={{
+                  padding: '0.75rem 1.1rem', borderRadius: 'var(--r)',
+                  background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.25)',
+                  color: 'var(--green)', fontWeight: 600, width: 'fit-content',
+                  display: 'flex', alignItems: 'center', gap: '0.45rem',
+                }}
+              >
+                ✅ {actionMessage}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
       {/* ===== MAIN CONTENT ===== */}
-      <div className="products-layout">
+      <section style={{ padding: '0 0 3.5rem' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
-            {/* Filter & Actions */}
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
-                  {categories.map(cat => (
-                    <button
-                      type="button"
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id)}
-                      style={{
-                        padding: '0.5rem 1.2rem',
-                        borderRadius: '8px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        backgroundColor: selectedCategory === cat.id ? '#ffb3c1' : 'rgba(255, 250, 252, 0.9)',
-                        color: selectedCategory === cat.id ? '#fff' : '#162033',
-                        fontWeight: selectedCategory === cat.id ? 700 : 500,
-                        transition: 'all 0.3s',
-                      }}
-                    >
-                      {cat.label}
-                    </button>
-                  ))}
-                </div>
-                <div style={{ padding: '0.7rem 1rem', background: 'rgba(255,255,255,0.72)', border: '1px solid rgba(255,143,31,0.12)', borderRadius: '999px', color: '#162033', fontWeight: 700 }}>
-                  Chọn build phù hợp và thêm ngay vào giỏ hàng
-                </div>
+          <div style={{ display: 'grid', gap: '1.5rem' }}>
+            {/* Filter tabs */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                {categories.map(cat => (
+                  <button
+                    type="button"
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    style={{
+                      padding: '0.55rem 1.15rem',
+                      borderRadius: 999,
+                      border: selectedCategory === cat.id ? '1px solid var(--cyan)' : '1px solid var(--border)',
+                      background: selectedCategory === cat.id
+                        ? 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.10))'
+                        : 'var(--surface)',
+                      color: selectedCategory === cat.id ? 'var(--cyan)' : 'var(--text-2)',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.25s var(--ease)',
+                      fontSize: '0.88rem',
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
               </div>
+              <div
+                style={{
+                  padding: '0.55rem 1rem', borderRadius: 999,
+                  background: 'var(--surface)', border: '1px solid var(--border)',
+                  color: 'var(--text-3)', fontWeight: 500, fontSize: '0.85rem',
+                }}
+              >
+                🔥 {filteredBuilds.length} cấu hình sẵn sàng
+              </div>
+            </div>
 
-              {showForm && (
-                <div style={{ marginBottom: '1rem', padding: '1rem 1.1rem', borderRadius: '14px', border: '1px solid rgba(255, 143, 31, 0.12)', background: 'rgba(255,255,255,0.7)', color: '#162033', fontWeight: 600 }}>
-                  Chế độ quản trị đã được chuyển sang khu vực admin.
-                </div>
-              )}
+            {/* Admin notice */}
+            {showForm && (
+              <div
+                style={{
+                  padding: '1rem 1.2rem', borderRadius: 'var(--r)',
+                  background: 'rgba(168,85,247,0.08)', border: '1px solid rgba(168,85,247,0.18)',
+                  color: 'var(--purple)', fontWeight: 600, fontSize: '0.9rem',
+                }}
+              >
+                💡 Chế độ quản trị đã được chuyển sang khu vực admin.
+              </div>
+            )}
 
-              {/* Builds Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.8rem' }}>
-                {filteredBuilds.map(build => (
+            {/* Builds Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
+              {filteredBuilds.map(build => {
+                const tier = getTierStyle(build.price);
+                return (
                   <div
                     key={build.id}
+                    className="glass-card"
                     style={{
-                      background: 'linear-gradient(135deg, rgba(255, 250, 252, 0.96), rgba(247, 251, 255, 0.97))',
-                      border: '1px solid rgba(255, 143, 31, 0.12)',
-                      borderRadius: '12px',
-                      padding: '1.5rem',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '1rem',
-                      transition: 'transform 0.3s, box-shadow 0.3s',
+                      gap: '0',
+                      padding: 0,
+                      borderRadius: 'var(--r-lg)',
+                      overflow: 'hidden',
+                      transition: 'transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease)',
                     }}
                     onMouseEnter={e => {
-                      (e.currentTarget as HTMLElement).style.transform = 'translateY(-8px)';
-                      (e.currentTarget as HTMLElement).style.boxShadow = '0 20px 40px rgba(255, 179, 193, 0.15)';
+                      (e.currentTarget as HTMLElement).style.transform = 'translateY(-6px)';
+                      (e.currentTarget as HTMLElement).style.boxShadow = `var(--shadow-lg), ${tier.glow}`;
+                      (e.currentTarget as HTMLElement).style.borderColor = tier.border;
                     }}
                     onMouseLeave={e => {
                       (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
                       (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '0.8rem' }}>
-                      <div>
-                        {build.badge && (
-                          <span style={{
-                            display: 'inline-block',
-                            background: 'linear-gradient(90deg, #ff9f7a, #ffb3c1)',
-                            color: '#162033',
-                            padding: '0.3rem 0.8rem',
-                            borderRadius: '999px',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                            marginBottom: '0.5rem',
-                          }}>
-                            {build.badge}
-                          </span>
-                        )}
-                        <h3 style={{ fontSize: 'clamp(1rem, 2vw, 1.08rem)', color: '#162033', margin: 0, marginBottom: '0.25rem' }}>
-                          {build.name}
-                        </h3>
-                        <p style={{ margin: 0, color: '#7c8fa6', fontSize: '0.82rem' }}>Còn {build.stock} bộ sẵn sàng giao</p>
+                    <div style={{ position: 'relative', aspectRatio: '16 / 9', overflow: 'hidden', background: 'linear-gradient(135deg, rgba(0,212,255,0.08), rgba(168,85,247,0.06))', borderBottom: '1px solid var(--border)' }}>
+                      <img
+                        src={resolveProductImage(build.image ?? null, 'prebuilt')}
+                        alt={build.name}
+                        loading="lazy"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: 'scale(1.01)' }}
+                      />
+                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 50%, rgba(5,13,26,0.7) 100%)', pointerEvents: 'none' }} />
+                      {build.badge && (
+                        <span style={{ position: 'absolute', top: 12, left: 12, padding: '0.3rem 0.65rem', borderRadius: 999, background: 'rgba(5,13,26,0.8)', color: '#fff', fontSize: '0.72rem', fontWeight: 800, border: '1px solid rgba(255,255,255,0.12)' }}>{build.badge}</span>
+                      )}
+                    </div>
+
+                    {/* card header with tier indicator */}
+                    <div
+                      style={{
+                        padding: '1.25rem 1.35rem 1rem',
+                        borderBottom: `1px solid var(--border)`,
+                        position: 'relative',
+                      }}
+                    >
+                      {/* subtle tier gradient top bar */}
+                      <div style={{
+                        position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+                        background: `linear-gradient(90deg, ${tier.color}, transparent)`,
+                        opacity: 0.6,
+                      }} />
+
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem' }}>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
+                            {build.badge && (
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  background: 'var(--grad-brand)',
+                                  color: '#fff',
+                                  padding: '0.25rem 0.7rem',
+                                  borderRadius: 999,
+                                  fontSize: '0.72rem',
+                                  fontWeight: 700,
+                                  letterSpacing: '0.02em',
+                                }}
+                              >
+                                {build.badge}
+                              </span>
+                            )}
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                background: tier.bg,
+                                border: `1px solid ${tier.border}`,
+                                color: tier.color,
+                                padding: '0.25rem 0.65rem',
+                                borderRadius: 999,
+                                fontSize: '0.72rem',
+                                fontWeight: 700,
+                              }}
+                            >
+                              {tier.label}
+                            </span>
+                          </div>
+                          <h3
+                            style={{
+                              margin: 0, color: 'var(--text)',
+                              fontFamily: 'var(--font-heading)', fontWeight: 700,
+                              fontSize: '1.1rem',
+                            }}
+                          >
+                            {build.name}
+                          </h3>
+                          <p style={{ margin: '0.2rem 0 0', color: 'var(--text-3)', fontSize: '0.8rem' }}>
+                            📦 Còn {build.stock} bộ sẵn sàng giao
+                          </p>
+                        </div>
+                      </div>
+
+                      <p style={{ margin: '0.65rem 0 0', color: 'var(--text-2)', fontSize: '0.9rem', lineHeight: 1.55 }}>
+                        {build.description}
+                      </p>
+                    </div>
+
+                    {/* specs section */}
+                    <div
+                      style={{
+                        padding: '1rem 1.35rem',
+                        background: 'var(--surface)',
+                      }}
+                    >
+                      <p style={{ margin: '0 0 0.6rem', color: 'var(--text-3)', fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                        📋 Cấu hình chi tiết
+                      </p>
+                      <div style={{ display: 'grid', gap: '0.4rem' }}>
+                        {Object.entries(build.specs).map(([key, value]) => (
+                          <div
+                            key={key}
+                            style={{
+                              display: 'flex', alignItems: 'center', gap: '0.55rem',
+                              padding: '0.4rem 0.65rem', borderRadius: 'var(--r-sm)',
+                              background: 'var(--surface-2)',
+                              fontSize: '0.84rem',
+                            }}
+                          >
+                            <span style={{ fontSize: '0.9rem', width: 22, textAlign: 'center' }}>
+                              {specIcons[key] || '•'}
+                            </span>
+                            <span style={{ color: 'var(--text-3)', fontWeight: 600, minWidth: 48 }}>
+                              {specLabels[key] || key}
+                            </span>
+                            <span style={{ color: 'var(--text)', fontWeight: 500 }}>{value}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
 
-                    <p style={{ color: '#4a5568', fontSize: '0.95rem', margin: 0 }}>
-                      {build.description}
-                    </p>
-
-                    <div style={{ background: 'rgba(255, 179, 193, 0.1)', padding: '1rem', borderRadius: '8px' }}>
-                      <p style={{ color: '#162033', fontSize: '0.9rem', margin: 0, marginBottom: '0.5rem', fontWeight: 600 }}>
-                        📋 Cấu hình:
-                      </p>
-                      <ul style={{ margin: 0, paddingLeft: '1rem', fontSize: '0.85rem', color: '#4a5568' }}>
-                        <li>CPU: {build.specs.cpu}</li>
-                        <li>GPU: {build.specs.gpu}</li>
-                        <li>RAM: {build.specs.ram}</li>
-                        <li>Storage: {build.specs.storage}</li>
-                        <li>PSU: {build.specs.psu}</li>
-                      </ul>
+                    {/* performance badge */}
+                    <div
+                      style={{
+                        padding: '0.7rem 1.35rem',
+                        borderTop: '1px solid var(--border)',
+                        display: 'flex', alignItems: 'center', gap: '0.5rem',
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+                          padding: '0.3rem 0.7rem', borderRadius: 999,
+                          background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.15)',
+                          color: 'var(--cyan)', fontSize: '0.78rem', fontWeight: 600,
+                        }}
+                      >
+                        ⚡ {build.performance}
+                      </span>
                     </div>
 
-                    <p style={{ color: '#7c8fa6', fontSize: '0.9rem', margin: 0 }}>
-                      ⚡ {build.performance}
-                    </p>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <p style={{
-                        background: 'linear-gradient(90deg, #ff6b9d, #ff9f7a)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        fontSize: 'clamp(1rem, 2vw, 1.3rem)',
-                        fontWeight: 700,
-                        margin: 0,
-                      }}>
-                        {(build.price / 1000000).toFixed(1)}M VNĐ
-                      </p>
-                      <button type="button"
+                    {/* price + add to cart */}
+                    <div
+                      style={{
+                        padding: '1rem 1.35rem 1.25rem',
+                        borderTop: '1px solid var(--border)',
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        gap: '0.75rem',
+                      }}
+                    >
+                      <div>
+                        <p style={{ margin: 0, color: 'var(--text-3)', fontSize: '0.72rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                          Tổng giá
+                        </p>
+                        <p
+                          className="gradient-text"
+                          style={{
+                            margin: '0.1rem 0 0',
+                            fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)',
+                            fontWeight: 800,
+                            fontFamily: 'var(--font-heading)',
+                          }}
+                        >
+                          {new Intl.NumberFormat('vi-VN').format(build.price)}₫
+                        </p>
+                      </div>
+                      <button
+                        type="button"
                         onClick={() => handleAddToCart(build)}
+                        className="btn-primary"
                         style={{
-                          padding: '0.6rem 1.2rem',
-                          background: 'linear-gradient(135deg, #ffb3c1, #ff9f7a)',
-                          color: '#162033',
-                          border: 'none',
-                          borderRadius: '6px',
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          transition: 'transform 0.2s',
+                          display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                          padding: '0.7rem 1.25rem', fontSize: '0.88rem',
+                          whiteSpace: 'nowrap',
+                          transition: 'transform 0.2s var(--ease), box-shadow 0.2s var(--ease)',
                         }}
-                        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.08)')}
-                        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+                        onMouseEnter={e => {
+                          (e.currentTarget as HTMLElement).style.transform = 'scale(1.05)';
+                          (e.currentTarget as HTMLElement).style.boxShadow = 'var(--shadow-cyan)';
+                        }}
+                        onMouseLeave={e => {
+                          (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                          (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                        }}
                       >
-                        🛒 Giỏ Hàng
+                        🛒 Thêm Giỏ Hàng
                       </button>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
+
+            {filteredBuilds.length === 0 && (
+              <div style={{
+                textAlign: 'center', padding: '3.5rem 1rem', color: 'var(--text-3)',
+                background: 'var(--surface)', borderRadius: 'var(--r-lg)', border: '1px solid var(--border)',
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '0.75rem' }}>🖥️</div>
+                <p style={{ margin: 0, fontWeight: 600, color: 'var(--text-2)', fontSize: '1.05rem' }}>
+                  Không tìm thấy build nào
+                </p>
+                <p style={{ margin: '0.4rem 0 0', fontSize: '0.9rem' }}>
+                  Hãy thử chọn danh mục khác để tìm cấu hình phù hợp.
+                </p>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ===== STATS & TRUST ROW ===== */}
+      <section style={{ padding: '0 0 3rem' }}>
+        <div className="container">
+          <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+            {[
+              { icon: '🛡️', label: 'Bảo Hành', value: '12 Tháng', desc: 'Chính hãng toàn bộ' },
+              { icon: '🚚', label: 'Giao Hàng', value: 'Miễn Phí', desc: 'Nội thành HCM' },
+              { icon: '🔧', label: 'Lắp Ráp', value: 'Chuyên Nghiệp', desc: 'Kỹ thuật viên cao cấp' },
+              { icon: '💬', label: 'Hỗ Trợ', value: '24/7', desc: 'Tư vấn mọi lúc' },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="stat-card"
+                style={{
+                  textAlign: 'center',
+                  padding: '1.25rem 1rem',
+                }}
+              >
+                <div style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
+                <div className="gradient-text" style={{ fontSize: '1.1rem', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>
+                  {stat.value}
+                </div>
+                <div style={{ color: 'var(--text)', fontWeight: 600, fontSize: '0.85rem', marginTop: '0.15rem' }}>
+                  {stat.label}
+                </div>
+                <div style={{ color: 'var(--text-3)', fontSize: '0.78rem', marginTop: '0.2rem' }}>
+                  {stat.desc}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
@@ -426,27 +726,42 @@ const BuildForm = ({
     }
   };
 
+  const inputStyle: React.CSSProperties = {
+    padding: '0.8rem 1rem',
+    borderRadius: 'var(--r)',
+    border: '1px solid var(--border-2)',
+    background: 'var(--surface)',
+    color: 'var(--text)',
+    fontSize: '0.92rem',
+    fontFamily: 'var(--font)',
+    outline: 'none',
+    width: '100%',
+  };
+
   return (
-    <div style={{
-      background: 'linear-gradient(135deg, rgba(255, 250, 252, 0.96), rgba(247, 251, 255, 0.97))',
-      border: '1px solid rgba(255, 143, 31, 0.12)',
-      borderRadius: '12px',
-      padding: '2rem',
-      marginBottom: '2rem',
-    }}>
-      <h3 style={{ color: '#162033', marginTop: 0 }}>{build ? 'Chỉnh Sửa Build' : 'Thêm Build Mới'}</h3>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+    <div
+      className="glass-card"
+      style={{
+        padding: '1.75rem',
+        marginBottom: '1.5rem',
+        borderRadius: 'var(--r-xl)',
+      }}
+    >
+      <h3 style={{ color: 'var(--text)', marginTop: 0, fontFamily: 'var(--font-heading)', fontSize: '1.15rem' }}>
+        {build ? '✏️ Chỉnh Sửa Build' : '➕ Thêm Build Mới'}
+      </h3>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
         <input
           type="text"
           placeholder="Tên build"
           value={formData.name}
           onChange={e => handleChange('name', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <select
           value={formData.category}
           onChange={e => handleChange('category', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={{ ...inputStyle, cursor: 'pointer' }}
         >
           <option value="gaming">Gaming</option>
           <option value="office">Văn Phòng</option>
@@ -458,7 +773,7 @@ const BuildForm = ({
           placeholder="Giá (VNĐ)"
           value={formData.price}
           onChange={e => handleChange('price', Number(e.target.value))}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <input
           type="number"
@@ -466,20 +781,20 @@ const BuildForm = ({
           placeholder="Tồn kho"
           value={formData.stock}
           onChange={e => handleChange('stock', Number(e.target.value))}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <input
           type="text"
           placeholder="Mô tả hiệu năng"
           value={formData.performance}
           onChange={e => handleChange('performance', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <textarea
           placeholder="Mô tả chi tiết"
           value={formData.description}
           onChange={e => handleChange('description', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem', gridColumn: '1 / -1' }}
+          style={{ ...inputStyle, gridColumn: '1 / -1', resize: 'vertical' as any }}
           rows={2}
         />
         <input
@@ -487,63 +802,51 @@ const BuildForm = ({
           placeholder="CPU"
           value={formData.specs.cpu}
           onChange={e => handleChange('specs.cpu', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <input
           type="text"
           placeholder="GPU"
           value={formData.specs.gpu}
           onChange={e => handleChange('specs.gpu', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <input
           type="text"
           placeholder="RAM"
           value={formData.specs.ram}
           onChange={e => handleChange('specs.ram', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <input
           type="text"
           placeholder="Storage"
           value={formData.specs.storage}
           onChange={e => handleChange('specs.storage', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
         <input
           type="text"
           placeholder="PSU"
           value={formData.specs.psu}
           onChange={e => handleChange('specs.psu', e.target.value)}
-          style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid rgba(255, 143, 31, 0.2)', fontSize: '0.95rem' }}
+          style={inputStyle}
         />
       </div>
-      <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-                    <button type="button"
+      <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem' }}>
+        <button
+          type="button"
           onClick={() => onSave(formData)}
-          style={{
-            padding: '0.8rem 1.5rem',
-            background: 'linear-gradient(135deg, #ffb3c1, #ff9f7a)',
-            color: '#162033',
-            border: 'none',
-            borderRadius: '6px',
-            fontWeight: 700,
-            cursor: 'pointer',
-          }}
+          className="btn-primary"
+          style={{ padding: '0.8rem 1.5rem' }}
         >
-          Lưu Build
+          ✅ Lưu Build
         </button>
-        <button type="button"
+        <button
+          type="button"
           onClick={onCancel}
-          style={{
-            padding: '0.8rem 1.5rem',
-            background: '#ddd',
-            color: '#162033',
-            border: 'none',
-            borderRadius: '6px',
-            fontWeight: 700,
-            cursor: 'pointer',
-          }}
+          className="btn-ghost"
+          style={{ padding: '0.8rem 1.5rem' }}
         >
           Hủy
         </button>

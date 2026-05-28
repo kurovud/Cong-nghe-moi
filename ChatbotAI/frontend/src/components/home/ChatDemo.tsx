@@ -41,15 +41,15 @@ const ChatDemo = () => {
     setInput("");
     setLoading(true);
     try {
-      const response = await fetch("/api/chat", {
+      const response = await fetch("/api/chat/rag", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ question: text })
       });
-      const data: ChatResponse = await response.json();
+      const data = await response.json();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.answer, sources: data.sources }
+        { role: "assistant", content: data.answer ?? data.reply ?? 'Xin lỗi, tôi không có câu trả lời.' , sources: data.matches?.map((m: any) => m.name) }
       ]);
     } catch {
       setMessages((prev) => [

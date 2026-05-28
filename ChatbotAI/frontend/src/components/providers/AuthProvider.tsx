@@ -207,6 +207,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUnreadCount(0);
     localStorage.removeItem("auth_token");
     localStorage.removeItem("refresh_token");
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("recent_paid_order");
+      window.dispatchEvent(new Event("auth:logout"));
+      if (window.location.pathname !== "/login") {
+        window.location.replace("/login");
+      }
+    }
   };
 
   useEffect(() => {

@@ -12,7 +12,7 @@ const EMPTY: Omit<PrebuiltPC, "id"> & { id?: string } = {
   name: "",
   purpose: "Gaming",
   price: 0,
-  image: "/images/placeholder.png",
+  image: "/images/placeholder.svg",
   components: { cpu: "", gpu: "", mainboard: "", ram: "", storage: "", psu: "", case: "", cooler: "" },
   description: "",
   rating: 5

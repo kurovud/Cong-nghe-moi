@@ -36,6 +36,7 @@ async function request<T>(endpoint: string, options: RequestOptions = {}): Promi
   const res = await fetch(url, {
     ...fetchOptions,
     headers,
+    cache: fetchOptions.method === 'GET' ? 'no-store' : fetchOptions.cache,
     credentials: 'include',
   });
 

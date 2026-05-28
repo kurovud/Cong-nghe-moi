@@ -23,7 +23,7 @@ export const productApi = {
   getProductById: (id: string) => http.get<any>(`/api/products/${id}`).then(normalizeProductPayload),
 
   searchProducts: (q: string, limit?: number) =>
-    http.get<any>('/api/products/search', { q, limit } as any).then(normalizeProductPayload),
+    http.get<any>('/api/products', { q, limit } as any).then(normalizeProductPayload),
 
   getCategories: () => http.get<any>('/api/products/categories'),
 
